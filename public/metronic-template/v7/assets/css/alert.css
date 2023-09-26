@@ -1,0 +1,18 @@
+.alert-fixed {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 20%;
+    z-index: 9999;
+    border-radius: 0px;
+}
+
+#search_clear:hover {
+    cursor: pointer;
+}
+
+.car__number {
+    border: 1px solid #000;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
