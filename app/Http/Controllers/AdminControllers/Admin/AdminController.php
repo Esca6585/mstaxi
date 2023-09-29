@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\AdminControllers\Product;
+namespace App\Http\Controllers\AdminControllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\Admin;
 use Illuminate\Http\Request;
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\AdminRequest;
 
 
-class ProductController extends Controller
+class AdminController extends Controller
 {
     public function __construct()
     {
@@ -25,7 +25,7 @@ class ProductController extends Controller
             $pagination = (int)$request->pagination;
         }
 
-        $products = Product::orderByDesc('id')->paginate($pagination);
+        $admins = Admin::orderByDesc('id')->paginate($pagination);
         
         if(request()->ajax()){
             if($request->search) {
@@ -33,16 +33,16 @@ class ProductController extends Controller
                 
                 $requestData = ['name_tm', 'name_en', 'name_ru'];
     
-                $products = Product::where(function($q) use($requestData, $searchQuery) {
+                $admins = Admin::where(function($q) use($requestData, $searchQuery) {
                                         foreach ($requestData as $field)
                                         $q->orWhere($field, 'like', "%{$searchQuery}%");
                                 })->paginate($pagination);
             }
             
-            return view('admin-panel.product.product-table', compact('products', 'pagination'))->render();
+            return view('admin-panel.admin.admin-table', compact('admins', 'pagination'))->render();
         }
 
-        return view('admin-panel.product.product', compact('products', 'pagination'));
+        return view('admin-panel.admin.admin', compact('admins', 'pagination'));
     }
 
     /**
@@ -69,10 +69,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Admin $admin)
     {
         //
     }
@@ -80,10 +80,10 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Admin $admin)
     {
         //
     }
