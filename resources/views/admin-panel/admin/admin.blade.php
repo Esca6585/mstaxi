@@ -1,7 +1,7 @@
 @extends('layouts.admin-template-app')
 
 @section('title')
-    {{ __('Products') }}
+    {{ __('Admins') }}
 @endsection
 
 @section('style')
@@ -142,8 +142,8 @@
                                     <ul
                                         class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                                         <li class="breadcrumb-item text-muted">
-                                            <a href="{{ route('product.index', [ app()->getlocale() ]) }}"
-                                                class="text-muted">{{ __('Products') }}</a>
+                                            <a href="{{ route('admin.index', [ app()->getlocale() ]) }}"
+                                                class="text-muted">{{ __('Admins') }}</a>
                                         </li>
                                     </ul>
                                     <!--end::Breadcrumb-->
@@ -162,7 +162,7 @@
                             <div class="card card-custom">
                                 <div class="card-header flex-wrap py-5">
                                     <div class="card-title">
-                                        <h3 class="card-label">{{ __('Products') }}
+                                        <h3 class="card-label">{{ __('Admins') }}
                                         </h3>
                                     </div>
                                     <div class="card-toolbar">
@@ -202,7 +202,7 @@
                                                     class="form-control form-control-sm font-weight-bold mr-4 border-0 bg-light" style="width: 65px;">
                                                     
                                                     @foreach([5,10,15,20,25,50,100] as $number)
-                                                    <option value="{{ $number }}" {{ $pagination == $number ? 'selected=selected' : ''}} >{{ $number }}</option>
+                                                    <option value="{{ $number }}" {{ $pagination == $number ? 'selected=selected' : '' }} >{{ $number }}</option>
                                                     @endforeach
 
                                                 </select>
@@ -274,7 +274,7 @@
                                     <!--end::Alert-->
 
                                     <!--begin: Datatable-->
-                                    @include('admin-panel.product.product-table')
+                                    @include('admin-panel.admin.admin-table')
                                     <!--end: Datatable-->
                                 </div>
                             </div>

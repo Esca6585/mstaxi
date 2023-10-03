@@ -67,23 +67,6 @@ class DriverController extends Controller
      */
     public function store(DriverCreateRequest $request)
     {
-        if($request->file('image')){
-            $image = $request->file('image');
-            
-            $date = date("d-m-Y H-i-s");
-            
-            $fileRandName = Str::random(10);
-            $fileExt = $image->getClientOriginalExtension();
-
-            $fileName = $fileRandName . '.' . $fileExt;
-            
-            $path = 'assets/brand/' . Str::slug($request->name . '-' . $date ) . '/';
-
-            $image->move($path, $fileName);
-            
-            $originalImage = $path . $fileName;
-        }
-        
         $driver = new Driver;
         
         $driver->first_name = ucfirst($request->first_name);
@@ -93,7 +76,7 @@ class DriverController extends Controller
         $driver->birthday = $request->birthday;
         $driver->start_working = $request->start_working;
         $driver->username = $request->username;
-        $driver->password = $request->password;
+        $driver->password = Hash::make($request->password);
         $driver->status = $request->status;
         
         $driver->save();
@@ -132,39 +115,34 @@ class DriverController extends Controller
      */
     public function update($lang, DriverUpdateRequest $request, Driver $driver)
     {
-        if(Driver::where('username', $request->username)->where('id', $driver->id)->exists()) {
+        if($request->password != null){
+            $this->validate($request, [
+                'password' => 'confirmed|min:8',
+            ]);
 
-            if($request->password != null){
-                $this->validate($request, [
-                    'password' => 'confirmed|min:8',
-                ]);
-
-                $driver->first_name = ucfirst($request->first_name);
-                $driver->last_name = ucfirst($request->last_name);
-                $driver->car_number = strtoupper($request->car_number);
-                $driver->car_model = $request->car_model;
-                $driver->birthday = $request->birthday;
-                $driver->start_working = $request->start_working . date(' H:i:s');
-                $driver->username = $request->username;
-                $driver->password = Hash::make($request->password);
-                $driver->status = $request->status;
-            } else {
-                $driver->first_name = ucfirst($request->first_name);
-                $driver->last_name = ucfirst($request->last_name);
-                $driver->car_number = strtoupper($request->car_number);
-                $driver->car_model = $request->car_model;
-                $driver->birthday = $request->birthday;
-                $driver->start_working = $request->start_working . date(' H:i:s');
-                $driver->username = $request->username;
-                $driver->status = $request->status;
-            }
-            
-            $driver->update();
-            
-            return redirect()->route('driver.index', [ app()->getlocale() ])->with('success-update', 'The resource was updated!');
+            $driver->first_name = ucfirst($request->first_name);
+            $driver->last_name = ucfirst($request->last_name);
+            $driver->car_number = strtoupper($request->car_number);
+            $driver->car_model = $request->car_model;
+            $driver->birthday = $request->birthday;
+            $driver->start_working = $request->start_working . date(' H:i:s');
+            $driver->username = $request->username;
+            $driver->password = Hash::make($request->password);
+            $driver->status = $request->status;
         } else {
-            return redirect()->route('driver.index', [ app()->getlocale() ])->with('warning', 'This Username already is exist!');
+            $driver->first_name = ucfirst($request->first_name);
+            $driver->last_name = ucfirst($request->last_name);
+            $driver->car_number = strtoupper($request->car_number);
+            $driver->car_model = $request->car_model;
+            $driver->birthday = $request->birthday;
+            $driver->start_working = $request->start_working . date(' H:i:s');
+            $driver->username = $request->username;
+            $driver->status = $request->status;
         }
+        
+        $driver->update();
+
+        return redirect()->route('driver.index', [ app()->getlocale() ])->with('success-update', 'The resource was updated!');
     }
 
     /**

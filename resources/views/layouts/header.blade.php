@@ -15,6 +15,13 @@
                             <i class="menu-arrow"></i>
                         </a>
                     </li>
+                    
+                    <li class="menu-item {{ Request::is('*/admin/admin*') ? 'menu-item-active' : '' }}">
+                        <a href="{{ route('admin.index', app()->getlocale() ) }}" class="menu-link">
+                            <span class="menu-text">{{ __('Admins') }}</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                    </li>
 
                     <li class="menu-item {{ Request::is('*/admin/tarif*') ? 'menu-item-active' : '' }}">
                         <a href="{{ route('tarif.index', app()->getlocale() ) }}" class="menu-link">
@@ -30,12 +37,6 @@
                         </a>
                     </li>
 
-                    <li class="menu-item {{ Request::is('*/admin/product*') ? 'menu-item-active' : '' }}">
-                        <a href="{{ route('product.index', app()->getlocale() ) }}" class="menu-link">
-                            <span class="menu-text">{{ __('Products') }}</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                    </li>
                 </ul>
                 <!--end::Header Nav-->
             </div>

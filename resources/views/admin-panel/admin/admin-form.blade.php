@@ -1,7 +1,7 @@
 @extends('layouts.admin-template-app')
 
 @section('title')
-{{ __('Categories') }} {{ __( ucfirst(request()->segment(count(request()->segments())))) }}
+{{ __('Admins') }} {{ __( ucfirst(request()->segment(count(request()->segments())))) }}
 @endsection
 
 @section('style')
@@ -141,14 +141,13 @@
                                     <ul
                                         class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                                         <li class="breadcrumb-item text-muted">
-                                            <a href="{{ route('category.index', [ app()->getlocale(), 'all' ]) }}"
-                                                class="text-muted">{{ __('Categories') }}</a>
+                                            <a href="{{ route('admin.index', [ app()->getlocale() ]) }}"
+                                                class="text-muted">{{ __('Admins') }}</a>
                                         </li>
 
                                         <li class="breadcrumb-item text-muted">
-                                            <a href="{{ route('category.index', [ app()->getlocale(), $categoryType ]) }}"
-                                                class="text-muted">
-                                                {{ __( ucfirst(Request::segment(3)) . ' Categories') }}
+                                            <a href="{{ route('admin.index', [ app()->getlocale() ]) }}"
+                                                class="text-muted"> {{ __( ucfirst(request()->segment(count(request()->segments())))) }}
                                             </a>
                                         </li>
                                     </ul>
@@ -168,7 +167,7 @@
                             <div class="card card-custom">
                                 <div class="card-header flex-wrap py-5">
                                     <div class="card-title">
-                                        <h3 class="card-label">{{ __('Categories') }}
+                                        <h3 class="card-label">{{ __('Admins') }}
                                             <span class="d-block text-muted pt-2 font-size-sm">
                                                 {{ __( ucfirst(request()->segment(count(request()->segments())))) }}
                                             </span>
@@ -177,15 +176,15 @@
 
                                 </div>
                                 <!--begin::Form-->
-                                @if($category->id)
+                                @if($admin->id)
                                 <form
-                                    action="{{ route(Request::segment(4) . '.update', [ app()->getlocale(), $categoryType, $category->id ] ) }}"
+                                    action="{{ route(Request::segment(3) . '.update', [ app()->getlocale(), $admin->id ] ) }}"
                                     method="post" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     @else
                                     <form
-                                        action="{{ route(Request::segment(4) . '.store', [ app()->getlocale(), $categoryType ] ) }}"
+                                        action="{{ route(Request::segment(3) . '.store', [ app()->getlocale() ] ) }}"
                                         method="post" enctype="multipart/form-data">
                                         @csrf
                                         @endif
@@ -193,20 +192,19 @@
                                         <div class="card-body">
                                             <div class="container">
                                                 <div class="row">
-                                                    @foreach (Config::get('languages') as $lang => $language)
                                                     <div class="col-4">
                                                         <div class="form-group">
-                                                            <label>{{ __('Name') }} ({{ $language['name'] }})</label>
+                                                            <label>{{ __('First Name') }}</label>
 
                                                             <input type="text"
-                                                                class="form-control @error('name_' . $lang ) is-invalid @enderror"
-                                                                name="name_{{ $lang }}"
-                                                                placeholder="{{ __('Name') }} ({{ $language['name'] }})..."
-                                                                value="{{ $category->{ 'name_' . $lang } ?? '' }}{{ request()->segment(count(request()->segments())) == 'create' ? old('name_' . $lang) : '' }}" />
+                                                                class="form-control @error('first_name') is-invalid @enderror"
+                                                                name="first_name"
+                                                                placeholder="{{ __('First Name') }}"
+                                                                value="{{ $admin->first_name }}{{ request()->segment(count(request()->segments())) == 'create' ? old('first_name') : '' }}" />
 
-                                                            @error('name_' . $lang )
+                                                            @error('first_name')
                                                             <div class="fv-plugins-message-container invalid-feedback">
-                                                                <div data-field="email" data-validator="notEmpty">
+                                                                <div data-field="first_name" data-validator="notEmpty">
                                                                     {{ $message }}
                                                                 </div>
                                                             </div>
@@ -214,80 +212,92 @@
                                                         </div>
 
                                                     </div>
-                                                    @endforeach
 
                                                     <div class="col-4">
                                                         <div class="form-group">
-                                                            <label>{{ __('Img') }}</label>
+                                                            <label>{{ __('Last Name') }}</label>
 
-                                                            <input type="file"
-                                                                class="form-control @error('svg') is-invalid @enderror"
-                                                                name="img" placeholder="{{ __('Img') }}..." />
-                                                            @error('img')
+                                                            <input type="text"
+                                                                class="form-control @error('last_name') is-invalid @enderror"
+                                                                name="last_name"
+                                                                placeholder="{{ __('Last Name') }}"
+                                                                value="{{ $admin->last_name }}{{ request()->segment(count(request()->segments())) == 'create' ? old('last_name') : '' }}" />
+
+                                                            @error('last_name')
                                                             <div class="fv-plugins-message-container invalid-feedback">
-                                                                <div data-field="email" data-validator="notEmpty">
+                                                                <div data-field="last_name" data-validator="notEmpty">
                                                                     {{ $message }}
                                                                 </div>
                                                             </div>
                                                             @enderror
                                                         </div>
+
                                                     </div>
 
                                                     <div class="col-4">
                                                         <div class="form-group">
-                                                            <label>{{ __('Category') }}</label>
-                                                            <select class="form-control" id="exampleSelect1"
-                                                                name="category_id">
-                                                                <option value="">---{{ __('unselected') }}---
-                                                                </option>
-                                                                @foreach($parentCategories as $parentCategory)
-                                                                <option value="{{ $parentCategory->id }}"
-                                                                    {{ $parentCategory->id == $category->category_id ? 'selected=selected' : '' }}>
-                                                                    {{ $parentCategory->{ 'name_' . app()->getlocale() } }}
-                                                                </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
+                                                            <label>{{ __('Username') }}</label>
 
-                                                    @if($category->img)
-                                                    @foreach($category->img as $key => $image)
-                                                    <div class="col">
-                                                        <div class="image-input image-input-outline"
-                                                            id="kt_image_{{ $key }}" data-images-count="{{ $key }}"
-                                                            style="background-image: url()">
-                                                            <div class="image-input-wrapper"
-                                                                style="background-image: url({{ asset($image) }})">
+                                                            <input type="text"
+                                                                class="form-control @error('username') is-invalid @enderror"
+                                                                name="username"
+                                                                placeholder="{{ __('Username') }}"
+                                                                value="{{ $admin->username }}{{ request()->segment(count(request()->segments())) == 'create' ? old('username') : '' }}" />
+
+                                                            @error('username')
+                                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                                <div data-field="username" data-validator="notEmpty">
+                                                                    {{ $message }}
+                                                                </div>
                                                             </div>
-
-                                                            <label
-                                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                                data-action="change" data-toggle="tooltip" title=""
-                                                                data-original-title="Change avatar">
-                                                                <i class="fa fa-pen icon-sm text-muted"></i>
-                                                                <input type="file" name="profile_avatar"
-                                                                    accept=".png, .jpg, .jpeg" />
-
-                                                                <input type="hidden" name="profile_avatar_remove" />
-                                                            </label>
-
-                                                            <span
-                                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                                data-action="cancel" data-toggle="tooltip"
-                                                                title="Cancel avatar">
-                                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                            </span>
-
-                                                            <span
-                                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                                data-action="remove" data-toggle="tooltip"
-                                                                title="Remove avatar">
-                                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                            </span>
+                                                            @enderror
                                                         </div>
+
                                                     </div>
-                                                    @endforeach
-                                                    @endif
+
+                                                    <div class="col-4">
+                                                        <div class="form-group">
+                                                            <label>{{ __('Password') }}</label>
+
+                                                            <input
+                                                                class="form-control @error('password') is-invalid @enderror"
+                                                                type="password"
+                                                                placeholder="{{ __('Password') }}..."
+                                                                name="password"
+                                                                value="{{ old('password') }}" />
+
+                                                            @error('password')
+                                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                                <div data-field="password" data-validator="notEmpty">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            </div>
+                                                            @enderror
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-4">
+                                                        <div class="form-group">
+                                                            <label>{{ __('Confirm Password') }}</label>
+
+                                                            <input
+                                                                class="form-control @error('password') is-invalid @enderror"
+                                                                type="password"
+                                                                placeholder="{{ __('Confirm Password') }}..."
+                                                                name="password_confirmation"
+                                                                value="{{ old('password_confirmation') }}" />
+
+                                                            @error('password')
+                                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                                <div data-field="password" data-validator="notEmpty">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            </div>
+                                                            @enderror
+                                                        </div>
+
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -310,12 +320,12 @@
                                             </a>
 
                                             <button type="submit"
-                                                title="{{ $category->id ? __('Edit') : __('Create') }}"
-                                                class="btn {{ $category->id ? 'btn-warning' : 'btn-primary' }} font-weight-bolder">
+                                                title="{{ $admin->id ? __('Edit') : __('Create') }}"
+                                                class="btn {{ $admin->id ? 'btn-warning' : 'btn-primary' }} font-weight-bolder">
                                                 <span class="svg-icon svg-icon-md">
-                                                    @if($category->id)
+                                                    @if($admin->id)
                                                     <span
-                                                        class="svg-icon svg-icon-md {{ $category->id ? 'svg-icon-dark' : '' }}">
+                                                        class="svg-icon svg-icon-md {{ $admin->id ? 'svg-icon-dark' : '' }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                                                             height="24px" viewBox="0 0 24 24" version="1.1">
@@ -354,8 +364,8 @@
                                                     </svg>
                                                     @endif
                                                 </span>
-                                                <span class="{{ $category->id ? 'text-dark' : '' }}">
-                                                    {{ $category->id ? __('Edit') : __('Create') }}
+                                                <span class="{{ $admin->id ? 'text-dark' : '' }}">
+                                                    {{ $admin->id ? __('Edit') : __('Create') }}
                                                 </span>
                                             </button>
                                         </div>

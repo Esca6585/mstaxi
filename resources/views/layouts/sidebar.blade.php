@@ -6,7 +6,7 @@
         <!--begin::Menu Nav-->
         <ul class="menu-nav">
             <!--begin::Dashboard-->
-            <li class="menu-item {{ Request::is('*/admin/dashboard') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+            <li class="menu-item {{ Request::is('*/admin/dashboard*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
                 <a href="{{ route('admin.dashboard', app()->getlocale() ) }}" class="menu-link">
                     <span class="svg-icon menu-icon">
                         <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
@@ -28,32 +28,26 @@
                 </a>
             </li>
             <!--end::Dashboard-->
-            <!--begin::Product-->
-            <li class="menu-item {{ Request::is('*/admin/product') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                <a href="{{ route('product.index', app()->getlocale() ) }}" class="menu-link">
+            <!--begin::Admin-->
+            <li class="menu-item {{ Request::is('*/admin/admin*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                <a href="{{ route('admin.index', app()->getlocale() ) }}" class="menu-link">
                     <span class="svg-icon menu-icon">
-                        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
-                            <title>Stockholm-icons / Shopping / Bag2</title>
+                            <title>Stockholm-icons / General / User</title>
                             <desc>Created with Sketch.</desc>
                             <defs></defs>
-                            <g id="Stockholm-icons-/-Shopping-/-Bag2" stroke="none" stroke-width="1" fill="none"
-                                fill-rule="evenodd">
-                                <rect id="bound" x="0" y="0" width="24" height="24"></rect>
-                                <path
-                                    d="M5.94290508,4 L18.0570949,4 C18.5865712,4 19.0242774,4.41271535 19.0553693,4.94127798 L19.8754445,18.882556 C19.940307,19.9852194 19.0990032,20.9316862 17.9963398,20.9965487 C17.957234,20.9988491 17.9180691,21 17.8788957,21 L6.12110428,21 C5.01653478,21 4.12110428,20.1045695 4.12110428,19 C4.12110428,18.9608266 4.12225519,18.9216617 4.12455553,18.882556 L4.94463071,4.94127798 C4.97572263,4.41271535 5.41342877,4 5.94290508,4 Z"
-                                    id="Combined-Shape" fill="#000000" opacity="0.3"></path>
-                                <path
-                                    d="M7,7 L9,7 C9,8.65685425 10.3431458,10 12,10 C13.6568542,10 15,8.65685425 15,7 L17,7 C17,9.76142375 14.7614237,12 12,12 C9.23857625,12 7,9.76142375 7,7 Z"
-                                    id="Oval-28" fill="#000000"></path>
+                            <g id="Stockholm-icons-/-General-/-User" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
+                                <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" id="Mask" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" id="Mask-Copy" fill="#000000" fill-rule="nonzero"></path>
                             </g>
                         </svg>
                     </span>
-                    <span class="menu-text">{{ __('Products') }}</span>
+                    <span class="menu-text">{{ __('Admins') }}</span>
                 </a>
             </li>
-            <!--end::Product-->
+            <!--end::Admin-->
             <!--begin::Tarif-->
             <li class="menu-item {{ Request::is('*/admin/tarif*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
                 <a href="{{ route('tarif.index', app()->getlocale() ) }}" class="menu-link">

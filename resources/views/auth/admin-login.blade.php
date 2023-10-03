@@ -28,9 +28,9 @@
 								<h1 class="text-dark mb-3">{{ __('Login') }}</h1>
 								<!--end::Title-->
 								<!--begin::Link-->
-								<div class="text-gray-400 fw-bold fs-4">{{ __('New Here?') }}
-								<a href="{{ route('register', app()->getLocale()) }}" class="link-warning fw-bolder">{{ __('Create an Account') }}</a></div>
-								<!--end::Link-->
+								<div class="text-gray-400 fw-bold fs-4">{{ __('Welcome Back!') }}
+								<a href="{{ url('/' . app()->getlocale() ) }}" class="link-warning fw-bolder">{{ config('app.name') }}</a></div>
+								<!-- end::Link -->
 							</div>
 							<!--begin::Heading-->
 							<!--begin::Input group-->
@@ -58,7 +58,7 @@
 									<label class="form-label fw-bolder text-dark fs-6 mb-0">{{ __('Password') }}</label>
 									<!--end::Label-->
 									<!--begin::Link-->
-									<a href="#forgot_password" class="link-warning fs-6 fw-bolder">{{ __('Forgot Your Password?') }}</a>
+									<!-- <a href="#forgot_password" class="link-warning fs-6 fw-bolder">{{ __('Forgot Your Password?') }}</a> -->
 									<!--end::Link-->
 								</div>
 								<!--end::Wrapper-->

@@ -16,9 +16,9 @@ Route::group([
         Route::get('/dashboard', [App\Http\Controllers\AdminControllers\Dashboard\DashboardController::class, 'index'])->name('admin.dashboard');
         
         Route::resources([
+            '/admin' => App\Http\Controllers\AdminControllers\Admin\AdminController::class,
             '/tarif' => App\Http\Controllers\AdminControllers\Tarif\TarifController::class,
             '/driver' => App\Http\Controllers\AdminControllers\Driver\DriverController::class,
-            '/product' => App\Http\Controllers\AdminControllers\Product\ProductController::class,
         ]);
     });
 });
