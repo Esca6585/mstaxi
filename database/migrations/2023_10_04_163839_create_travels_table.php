@@ -15,20 +15,23 @@ return new class extends Migration
     {
         Schema::create('travels', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('driver_id');
+
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('route_id');
             
             $table->float('price')->nullable();
             $table->float('km')->nullable();
 
-            $table->foreign('country_id')
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('countries')
+                ->on('users')
                 ->onDelete('cascade');
+
             $table->foreign('route_id')
                 ->references('id')
-                ->on('countries')
+                ->on('routes')
                 ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

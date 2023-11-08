@@ -1,7 +1,7 @@
 @extends('layouts.admin-template-app')
 
 @section('title')
-{{ __('Categories') }} {{ __('View') }}
+{{ __('Users') }} {{ __('View') }}
 @endsection
 
 @section('style')

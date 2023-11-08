@@ -1,5 +1,5 @@
 <span class="dtr-data d-flex">
-    <a href="{{ route(Request::segment(3) . '.show', [ app()->getlocale(), $driver->id ] ) }}"
+    <a href="{{ route(Request::segment(3) . '.show', [ app()->getlocale(), $user->id ] ) }}"
         class="btn btn-sm btn-clean btn-icon mr-2" title="{{ __('View') }}">
         <span class="svg-icon svg-icon-xl svg-icon-primary">
             <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -17,7 +17,7 @@
             </svg>
         </span>
     </a>
-    <a href="{{ route(Request::segment(3) . '.edit', [ app()->getlocale(), $driver->id ] ) }}"
+    <a href="{{ route(Request::segment(3) . '.edit', [ app()->getlocale(), $user->id ] ) }}"
         class="btn btn-sm btn-clean btn-icon mr-2 " title="{{ __('Edit') }}">
         <span class="svg-icon svg-icon-md svg-icon-warning">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -36,13 +36,13 @@
         </span>
     </a>
 
-    <form action="{{ route(Request::segment(3) . '.destroy', [ app()->getlocale(), $driver->id ] ) }}"
+    <form action="{{ route(Request::segment(3) . '.destroy', [ app()->getlocale(), $user->id ] ) }}"
         method="post">
         @method('delete')
         @csrf
 
         <button type="button" class="btn btn-sm btn-clean btn-icon" title="{{ __('Delete') }}" data-toggle="modal"
-            data-target="#exampleModalSizeSm-{{$driver->id}}">
+            data-target="#exampleModalSizeSm-{{$user->id}}">
             <span class="svg-icon svg-icon-md svg-icon-danger">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                     height="24px" viewBox="0 0 24 24" version="1.1">
@@ -64,7 +64,7 @@
 
         <div class="example-preview">
             <!--begin::Modal-->
-            <div class="modal fade" id="exampleModalSizeSm-{{$driver->id}}" tabindex="-1" aria-labelledby="exampleModalSizeSm-{{$driver->id}}"
+            <div class="modal fade" id="exampleModalSizeSm-{{$user->id}}" tabindex="-1" aria-labelledby="exampleModalSizeSm-{{$user->id}}"
                 style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                     <div class="modal-content">

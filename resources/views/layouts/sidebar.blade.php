@@ -68,16 +68,16 @@
                 </a>
             </li>
             <!--end::Tarif-->
-            <!--begin::Driver-->
-            <li class="menu-item {{ Request::is('*/admin/driver*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                <a href="{{ route('driver.index', app()->getlocale() ) }}" class="menu-link">
+            <!--begin::User-->
+            <li class="menu-item {{ Request::is('*/admin/user*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                <a href="{{ route('user.index', app()->getlocale() ) }}" class="menu-link">
                     <span class="svg-icon menu-icon">
                         <img src="{{ asset('metronic-template/v7/assets/media/svg/avatars/009-boy-4.svg') }}" alt="{{ asset('metronic-template/v7/assets/media/svg/avatars/009-boy-4.svg') }}" width="20px" >
                     </span>
-                    <span class="menu-text">{{ __('Drivers') }}</span>
+                    <span class="menu-text">{{ __('Users') }}</span>
                 </a>
             </li>
-            <!--end::Driver-->
+            <!--end::User-->
         </ul>
         <!--end::Menu Nav-->
     </div>

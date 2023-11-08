@@ -18,7 +18,7 @@ Route::group([
         Route::resources([
             '/admin' => App\Http\Controllers\AdminControllers\Admin\AdminController::class,
             '/tarif' => App\Http\Controllers\AdminControllers\Tarif\TarifController::class,
-            '/driver' => App\Http\Controllers\AdminControllers\Driver\DriverController::class,
+            '/user' => App\Http\Controllers\AdminControllers\User\UserController::class,
             '/travel' => App\Http\Controllers\AdminControllers\Travel\TravelController::class,
             '/route' => App\Http\Controllers\AdminControllers\Route\RouteController::class,
         ]);

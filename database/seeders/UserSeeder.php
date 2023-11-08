@@ -5,9 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use App\Models\Driver;
+use App\Models\User;
 
-class DriverSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,7 @@ class DriverSeeder extends Seeder
      */
     public function run()
     {
-        Driver::firstOrCreate(
+        User::firstOrCreate(
             [
                 'username' => 'driver',
             ],

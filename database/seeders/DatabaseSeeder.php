@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             TarifSeeder::class,
-            DriverSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
