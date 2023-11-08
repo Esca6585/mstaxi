@@ -19,6 +19,8 @@ Route::group([
             '/admin' => App\Http\Controllers\AdminControllers\Admin\AdminController::class,
             '/tarif' => App\Http\Controllers\AdminControllers\Tarif\TarifController::class,
             '/driver' => App\Http\Controllers\AdminControllers\Driver\DriverController::class,
+            '/travel' => App\Http\Controllers\AdminControllers\Travel\TravelController::class,
+            '/route' => App\Http\Controllers\AdminControllers\Route\RouteController::class,
         ]);
     });
 });
