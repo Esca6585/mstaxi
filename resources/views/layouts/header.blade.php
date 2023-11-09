@@ -30,9 +30,9 @@
                         </a>
                     </li>
 
-                    <li class="menu-item {{ Request::is('*/admin/driver*') ? 'menu-item-active' : '' }}">
-                        <a href="{{ route('driver.index', app()->getlocale() ) }}" class="menu-link">
-                            <span class="menu-text">{{ __('Drivers') }}</span>
+                    <li class="menu-item {{ Request::is('*/admin/user*') ? 'menu-item-active' : '' }}">
+                        <a href="{{ route('user.index', app()->getlocale() ) }}" class="menu-link">
+                            <span class="menu-text">{{ __('Users') }}</span>
                             <i class="menu-arrow"></i>
                         </a>
                     </li>
