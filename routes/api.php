@@ -18,14 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register', [App\Http\Controllers\Driver\Auth\AuthController::class, 'register']);
+Route::post('/register', [App\Http\Controllers\User\Auth\AuthController::class, 'register']);
 
-Route::post('/login', [App\Http\Controllers\Driver\Auth\AuthController::class, 'login']);
+Route::post('/login', [App\Http\Controllers\User\Auth\AuthController::class, 'login']);
 
-Route::post('/me', [App\Http\Controllers\Driver\Auth\AuthController::class, 'me'])->middleware('auth:sanctum');
+Route::post('/me', [App\Http\Controllers\User\Auth\AuthController::class, 'me'])->middleware('auth:sanctum');
 
-Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
- 
-    return ['token' => $token->plainTextToken];
-});
+Route::post('/measure-distance', [App\Http\Controllers\User\Travel\TravelController::class, 'measureDistance'])->middleware('auth:sanctum');
+
+Route::post('/travel-start', [App\Http\Controllers\User\Travel\TravelController::class, 'travelStart'])->middleware('auth:sanctum');
+
+Route::post('/route-save', [App\Http\Controllers\User\Travel\TravelController::class, 'routeSave'])->middleware('auth:sanctum');

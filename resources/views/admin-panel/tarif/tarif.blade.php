@@ -162,11 +162,7 @@
                             <div class="card card-custom">
                                 <div class="card-header flex-wrap py-5">
                                     <div class="card-title">
-                                        <h3 class="card-label">{{ __('Categories') }}
-                                            <span class="d-block text-muted pt-2 font-size-sm">
-                                                {{ __( ucfirst(Request::segment(3)) . ' Categories') }}
-                                            </span>
-                                        </h3>
+                                        <h3 class="card-label">{{ __('Tarifs') }}</h3>
                                     </div>
                                     <div class="card-toolbar">
                                         <!--begin::Button-->

@@ -162,8 +162,7 @@
                             <div class="card card-custom">
                                 <div class="card-header flex-wrap py-5">
                                     <div class="card-title">
-                                        <h3 class="card-label">{{ __('Admins') }}
-                                        </h3>
+                                    <h3 class="card-label">{{ __('Admins') }}</h3>
                                     </div>
                                     <div class="card-toolbar">
                                         <!--begin::Button-->

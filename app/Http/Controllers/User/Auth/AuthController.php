@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Driver\Auth;
+namespace App\Http\Controllers\User\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

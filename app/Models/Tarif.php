@@ -9,6 +9,8 @@ class Tarif extends Model
 {
     use HasFactory;
 
+    protected $table = 'tarifs';
+
     protected $fillable = [
         'name_tm',
         'name_ru',

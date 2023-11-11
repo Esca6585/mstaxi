@@ -17,19 +17,24 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('route_id');
+            $table->unsignedBigInteger('tarif_id');
             
             $table->float('price')->nullable();
             $table->float('km')->nullable();
+            
+            $table->string('lat');
+            $table->string('lon');
+            
+            $table->string('status')->nullable();
 
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
 
-            $table->foreign('route_id')
+            $table->foreign('tarif_id')
                 ->references('id')
-                ->on('routes')
+                ->on('tarifs')
                 ->onDelete('cascade');
 
             $table->timestamps();
