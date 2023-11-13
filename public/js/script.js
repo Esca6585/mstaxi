@@ -55,7 +55,7 @@ function start() {
     });
 
     var path = window.location.origin;
-    var token = '6|2ApWl5xJqso1J3w7NHUFuRklqnLhXDl5WlJdyIBz';
+    const token = document.getElementById("token");
     var data = "lat=37.91363186773645&lon=58.355444373933715&tarif_id=1";
 
     const successCallback = (position) => {
@@ -95,10 +95,11 @@ function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
     const token = document.getElementById("token");
-
     
     var path = window.location.origin;
     var data = 'username=' + username + '&password=' + password;
+
+    console.log(path);
     
     $.ajax({
         url: path + '/api/login',
