@@ -102,6 +102,9 @@ function login() {
     console.log(path);
     
     $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
         url: path + '/api/login',
         type: 'POST',
         data: data,
