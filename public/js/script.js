@@ -109,8 +109,6 @@ function login() {
         type: 'POST',
         data: data,
         success: function (response) {
-            console.log(data);
-            $("#success").html(data);
             $("#token").val(response.access_token);
             console.log(data);
             console.log(path);
