@@ -8,7 +8,7 @@
     <title>M'S Taxi</title>
 </head>
 <body>
-    <div class="d-flex justify-content-center align-items-center mh-100" style="height: 800px; flex-direction: column;">
+    <div class="d-flex justify-content-center align-items-center mh-100" style="flex-direction: column;">
     
         <label for="username">username</label>
         <input type="text" id="username">
@@ -19,17 +19,19 @@
         <button class="btn btn-primary m-3" onclick="login()">Login</button>
         
         <label for="token">token</label>
-        <input type="text" id="token" style="width: 500px;">
-
-        <hr />
+        <input type="text" id="token" class="w-25 m-3">
 
         <button class="btn btn-success w-25 m-3" onclick="start()">Start</button>
+        
+        <button class="btn btn-warning w-25 m-3" onclick="travel()">Travel</button>
 
         <button class="btn btn-danger w-25 m-3" onclick="finish()">Finish</button>
         
-        <input type="text" name="lat" id="lat">
+        <label for="Latitude">Latitude:</label>
+        <input type="text" name="lat" id="lat" class="w-25 m-3">
 
-        <input type="text" name="lon" id="lon">
+        <label for="Longitude">Longitude:</label>
+        <input type="text" name="lon" id="lon" class="w-25 m-3">
 
         <p id="location">Location</p>
 
@@ -44,6 +46,12 @@
             <button onclick="getLocation()">Try It</button>
 
             <p id="demo"></p>
+
+            <label for="tarif_id">tarif_id</label>
+            <input type="text" id="tarif_id" class="w-25 m-3" value="1">
+
+            <label for="travel_id">travel_id</label>
+            <input type="text" id="travel_id" class="w-25 m-3" value="1">
         </div>
     </div>
 

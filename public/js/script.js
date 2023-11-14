@@ -36,7 +36,7 @@ function showError(error) {
 }
 
 function start() {
-    
+
     $.ajax({
         url: 'http://ip-api.com/json/217.174.228.202',
         type: 'GET',
@@ -55,20 +55,17 @@ function start() {
     });
 
     var path = window.location.origin;
-    const token = document.getElementById("token");
-    var data = "lat=37.91363186773645&lon=58.355444373933715&tarif_id=1";
+    const token = document.getElementById("token").value;
+    const lat = document.getElementById("lon").value;
+    const lon = document.getElementById("lon").value;
+    const tarif_id = document.getElementById("tarif_id").value;
 
-    const successCallback = (position) => {
-        console.log(position);
-    };
-    
-    const errorCallback = (error) => {
-        console.log(error);
-    };
-      
-    var coord = navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    var data = 'lat=' + lat + '&lon=' + lon + '&tarif_id=' + tarif_id;
 
-    console.log(coord);
+    console.log(token);
+    console.log(lat);
+    console.log(lon);
+    console.log(tarif_id);
 
     $.ajax({
         headers: {
@@ -77,15 +74,54 @@ function start() {
         url: path + '/api/travel-start',
         type: 'POST',
         data: data,
-        success: function (data) {
-            console.log(data);
-            $("#success").html(data);
-            console.log(data);
+        success: function (res) {
+            console.log(res);
+            $("#success").html(res.travel_id);
+            console.log(res.travel_id);
             console.log(path);
         },
         error: function(err) {
             console.log(err);
             $("#error").html(err);
+            console.log(err);
+        }
+    });
+}
+
+function travel() {
+
+    var path = window.location.origin;
+    const token = document.getElementById("token").value;
+    const lat = document.getElementById("lon").value;
+    const lon = document.getElementById("lon").value;
+    const travel_id = document.getElementById("travel_id").value;
+    
+    var data = 'travel_id=' + travel_id + '&lat=' + lat + '&lon=' + lon;
+
+    console.log(token);
+    console.log(lat);
+    console.log(lon);
+    console.log(tarif_id);
+    console.log(travel_id);
+
+    $.ajax({
+        headers: {
+            Authorization: 'Bearer ' + token
+        },
+        url: path + '/api/route-save',
+        type: 'POST',
+        data: data,
+        success: function (res) {
+            console.log(res);
+            $("#success").html(res.tarif);
+            console.log(res.tarif);
+            console.log(res.status);
+            console.log(res.lastRoute);
+            console.log(path);
+        },
+        error: function(err) {
+            console.log(err);
+            $("#error").html(err.statusText);
             console.log(err);
         }
     });
@@ -110,12 +146,12 @@ function login() {
         data: data,
         success: function (response) {
             $("#token").val(response.access_token);
-            console.log(data);
+            console.log(response.access_token);
             console.log(path);
         },
         error: function(err) {
             console.log(err);
-            $("#error").html(err);
+            $("#error").html(err.statusText);
             console.log(err);
         }
     });
