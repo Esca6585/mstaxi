@@ -56,16 +56,17 @@ function start() {
 
     var path = window.location.origin;
     const token = document.getElementById("token").value;
-    const lat = document.getElementById("lon").value;
+    const lat = document.getElementById("lat").value;
     const lon = document.getElementById("lon").value;
     const tarif_id = document.getElementById("tarif_id").value;
 
     var data = 'lat=' + lat + '&lon=' + lon + '&tarif_id=' + tarif_id;
 
-    console.log(token);
-    console.log(lat);
-    console.log(lon);
-    console.log(tarif_id);
+    console.log("start()");
+    console.log("token:" + token);
+    console.log("lat:" + lat);
+    console.log("lon:" + lon);
+    console.log("tarif_id:" + tarif_id);
 
     $.ajax({
         headers: {
@@ -76,8 +77,9 @@ function start() {
         data: data,
         success: function (res) {
             console.log(res);
-            $("#success").html(res.travel_id);
+            $("#success").html('travel_id = ' + res.travel_id);
             console.log(res.travel_id);
+            $("#travel_id").val(res.travel_id);
             console.log(path);
         },
         error: function(err) {
@@ -92,17 +94,17 @@ function travel() {
 
     var path = window.location.origin;
     const token = document.getElementById("token").value;
-    const lat = document.getElementById("lon").value;
+    const lat = document.getElementById("lat").value;
     const lon = document.getElementById("lon").value;
     const travel_id = document.getElementById("travel_id").value;
     
     var data = 'travel_id=' + travel_id + '&lat=' + lat + '&lon=' + lon;
 
-    console.log(token);
-    console.log(lat);
-    console.log(lon);
-    console.log(tarif_id);
-    console.log(travel_id);
+    console.log("travel()");
+    console.log("token:" + token);
+    console.log("lat:" + lat);
+    console.log("lon:" + lon);
+    console.log("travel_id:" + travel_id);
 
     $.ajax({
         headers: {
@@ -123,7 +125,10 @@ function travel() {
             console.log(err);
             $("#error").html(err.statusText);
             console.log(err);
-        }
+        },
+        complete:function(){ 
+            setTimeout(travel, 10000);
+        } 
     });
 }
 

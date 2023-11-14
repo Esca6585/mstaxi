@@ -8,7 +8,7 @@
     <title>M'S Taxi</title>
 </head>
 <body>
-    <div class="d-flex justify-content-center align-items-center mh-100" style="flex-direction: column;">
+    <div class="d-flex align-items-center mh-100" style="flex-direction: column;">
     
         <label for="username">username</label>
         <input type="text" id="username">
