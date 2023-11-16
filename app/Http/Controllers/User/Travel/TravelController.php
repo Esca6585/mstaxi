@@ -31,13 +31,7 @@ class TravelController extends Controller
         
         $travel->save();
 
-        $time = Carbon::now()->format('H');
-
-        if($time >= 6 && $time <= 22){
-            $night = 'Day';
-        } else {
-            $night = 'Night';
-        }
+        $night = $this->dayOrNight();
 
         return response()->json([
             'travel_id' => $travel->id,
@@ -51,18 +45,10 @@ class TravelController extends Controller
 
     public function routeSave(Request $request)
     {
-        return $request->all();
-        
         $travel = Travel::findOrFail($request->travel_id);
         $tarif = Tarif::findOrFail($travel->tarif_id);
 
-        $time = Carbon::now()->format('H');
-
-        if($time >= 6 && $time <= 22){
-            $night = 'Day';
-        } else {
-            $night = 'Night';
-        }
+        $night = $this->dayOrNight();
 
         if($travel->status == 'waiting'){
             $metr = $this->waitingMeasureDistance($request->travel_id, $request);
@@ -150,7 +136,7 @@ class TravelController extends Controller
         
         $travel->update();
     }
-
+    
     public function waitingMeasureDistance($travel_id, $route)
     {
         $travel = Travel::findOrFail($travel_id);
@@ -179,8 +165,32 @@ class TravelController extends Controller
         return $kilometr;
     }
 
+    public function measureTwoDistance(Request $request)
+    {
+        $coordinate1 = new Coordinate($request->lat1, $request->lon1);
+        $coordinate2 = new Coordinate($request->lat2, $request->lon2);
+
+        $calculator = new Vincenty();
+    
+        $metr = $calculator->getDistance($coordinate1, $coordinate2); // returns 128130.850 (meters; ≈128 kilometers)
+        $kilometr = $this->metrToKilometr($metr);
+
+        return $kilometr;
+    }
+
     public function metrToKilometr($metr)
     {
         return $metr*0.001;
+    }
+
+    public function dayOrNight()
+    {
+        $time = Carbon::now()->format('H');
+
+        if($time >= 6 && $time <= 22){
+            return 'Day';
+        } else {
+            return 'Night';
+        }
     }
 }
