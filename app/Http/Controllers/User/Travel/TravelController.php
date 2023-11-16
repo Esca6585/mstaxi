@@ -51,6 +51,8 @@ class TravelController extends Controller
 
     public function routeSave(Request $request)
     {
+        return $request->all();
+        
         $travel = Travel::findOrFail($request->travel_id);
         $tarif = Tarif::findOrFail($travel->tarif_id);
 
