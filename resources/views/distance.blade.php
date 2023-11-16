@@ -39,20 +39,19 @@
         
         <p style="color: red;" id="error"></p>
 
-        <div>
-            <h1>HTML Geolocation</h1>
-            <p>Click the button to get your coordinates.</p>
+        <h1>HTML Geolocation</h1>
+        <p>Click the button to get your coordinates.</p>
 
-            <button onclick="getLocation()">Try It</button>
+        <button class="btn btn-secondary w-25 m-3" onclick="getLocation()">getLocation</button>
 
-            <p id="demo"></p>
+        <p id="demo"></p>
 
-            <label for="tarif_id">tarif_id</label>
-            <input type="text" id="tarif_id" class="w-25 m-3" value="1">
+        <label for="tarif_id">tarif_id</label>
+        <input type="text" id="tarif_id" class="w-25 m-3" value="1">
 
-            <label for="travel_id">travel_id</label>
-            <input type="text" id="travel_id" class="w-25 m-3" value="1">
-        </div>
+        <label for="travel_id">travel_id</label>
+        <input type="text" id="travel_id" class="w-25 m-3" value="1">
+        
     </div>
 
     

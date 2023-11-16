@@ -4,38 +4,12 @@ function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
+        x.innerHTML = "Geolocation is not supported by this browser";
     }
 }
 
-function showPosition(position) {
-    x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
-}
-
-function returnPosition(position) {
-    return position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
-}
-
-function showError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-        x.innerHTML = "User denied the request for Geolocation."
-        break;
-        case error.POSITION_UNAVAILABLE:
-        x.innerHTML = "Location information is unavailable."
-        break;
-        case error.TIMEOUT:
-        x.innerHTML = "The request to get user location timed out."
-        break;
-        case error.UNKNOWN_ERROR:
-        x.innerHTML = "An unknown error occurred."
-        break;
-    }
-}
-
-function start() {
+function getLocationByIpAddress(){
+    x.innerHTML += ' Location getting by ip address!';
 
     $.ajax({
         url: 'http://ip-api.com/json/217.174.228.202',
@@ -53,7 +27,36 @@ function start() {
             console.log(err);
         }
     });
+}
 
+function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude;
+
+    $("#lat").val(position.coords.latitude);
+    $("#lon").val(position.coords.longitude);
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+        x.innerHTML = "User denied the request for Geolocation."
+        break;
+        case error.POSITION_UNAVAILABLE:
+        x.innerHTML = "Location information is unavailable."
+        break;
+        case error.TIMEOUT:
+        x.innerHTML = "The request to get user location timed out."
+        break;
+        case error.UNKNOWN_ERROR:
+        x.innerHTML = "An unknown error occurred."
+        break;
+    }
+
+    getLocationByIpAddress();
+}
+
+function start() {
     var path = window.location.origin;
     const token = document.getElementById("token").value;
     const lat = document.getElementById("lat").value;
@@ -127,7 +130,7 @@ function travel() {
             console.log(err);
         },
         complete:function(){ 
-            setTimeout(travel, 10000);
+            // setTimeout(travel, 10000);
         } 
     });
 }
@@ -135,7 +138,7 @@ function travel() {
 function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    const token = document.getElementById("token");
+    const token = document.getElementById("token").value;
     
     var path = window.location.origin;
     var data = 'username=' + username + '&password=' + password;
