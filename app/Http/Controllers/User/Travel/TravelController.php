@@ -4,9 +4,9 @@ namespace App\Http\Controllers\User\Travel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
-use Location\Formatter\Coordinate\GeoJSON;
 use App\Models\Route;
 use App\Models\Travel;
 use App\Models\Tarif;
@@ -167,6 +167,17 @@ class TravelController extends Controller
 
     public function measureTwoDistance(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'lat1' => 'required',
+            'lon1' => 'required',
+            'lat2' => 'required',
+            'lon2' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(),400);
+        } 
+
         $coordinate1 = new Coordinate($request->lat1, $request->lon1);
         $coordinate2 = new Coordinate($request->lat2, $request->lon2);
 
