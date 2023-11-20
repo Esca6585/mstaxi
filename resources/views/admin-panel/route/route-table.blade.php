@@ -3,17 +3,14 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>{{ __('First Name') }}</th>
-                <th>{{ __('Last Name') }}</th>
-                <th>{{ __('Username') }}</th>
+                <th>{{ __('First Name') }} {{ __('Last Name') }}</th>
                 <th>{{ __('Car Number') }}</th>
                 <th>{{ __('Car Model') }}</th>
                 <th>{{ __('Price') }}</th>
                 <th>{{ __('Km') }}</th>
                 <th>{{ __('Status') }}</th>
                 <th>{{ __('Time') }}</th>
-                <th>{{ __('Lon') }}</th>
-                <th>{{ __('Lat') }}</th>
+                <th>{{ __('Latitude and Longitude') }}</th>
                 <th>{{ __('Actions') }}</th>
             </tr>
         </thead>
@@ -21,9 +18,7 @@
             @foreach ($routes as $route)
             <tr id="datatable">
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $route->user->first_name  }}</td>
-                <td>{{ $route->user->last_name  }}</td>
-                <td>{{ $route->user->username  }}</td>
+                <td>{{ $route->user->first_name  }} {{ $route->user->last_name  }}</td>
                 <td>
                     <img src="{{ asset('metronic-template/v8/assets/media/flags/turkmenistan.svg') }}" alt="{{ asset('metronic-template/v8/assets/media/flags/turkmenistan.svg') }}" width="20px" >
                     <span class="car__number">{{ $route->user->car_number  }}</span>
@@ -41,8 +36,9 @@
                         {{ $route->created_at }}
                     </span>
                 </td>
-                <td>{{ $route->lat  }}</td>
-                <td>{{ $route->lon  }}</td>
+                <td>
+                    <a href="http://www.google.com/maps/place/{{ $route->lat  }}, {{ $route->lon  }}/@{{ $route->lat  }}, {{ $route->lon  }},17z/data=!3m1!1e3" target="_blank">{{ $route->lat  }}, {{ $route->lon  }}</a>
+                </td>
                 <td>@include('admin-panel.route.route-action', [ $route ])</td>
             </tr>
             @endforeach

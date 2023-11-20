@@ -3,15 +3,14 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>{{ __('First Name') }}</th>
-                <th>{{ __('Last Name') }}</th>
-                <th>{{ __('Username') }}</th>
+                <th>{{ __('First Name') }} {{ __('Last Name') }}</th>
                 <th>{{ __('Car Number') }}</th>
                 <th>{{ __('Car Model') }}</th>
                 <th>{{ __('Price') }}</th>
                 <th>{{ __('Km') }}</th>
                 <th>{{ __('Status') }}</th>
                 <th>{{ __('Time') }}</th>
+                <th>{{ __('Latitude and Longitude') }}</th>
                 <th>{{ __('Actions') }}</th>
             </tr>
         </thead>
@@ -19,9 +18,7 @@
             @foreach ($travels as $travel)
             <tr id="datatable">
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $travel->user->first_name  }}</td>
-                <td>{{ $travel->user->last_name  }}</td>
-                <td>{{ $travel->user->username  }}</td>
+                <td>{{ $travel->user->first_name  }} {{ $travel->user->last_name  }}</td>
                 <td>
                     <img src="{{ asset('metronic-template/v8/assets/media/flags/turkmenistan.svg') }}" alt="{{ asset('metronic-template/v8/assets/media/flags/turkmenistan.svg') }}" width="20px" >
                     <span class="car__number">{{ $travel->user->car_number  }}</span>
@@ -38,6 +35,9 @@
                     <span class="badge badge-warning">
                         {{ $travel->created_at }}
                     </span>
+                </td>
+                <td>
+                    <a href="http://www.google.com/maps/place/{{ $travel->lat  }}, {{ $travel->lon  }}/@{{ $travel->lat  }}, {{ $travel->lon  }},17z/data=!3m1!1e3" target="_blank">{{ $travel->lat  }}, {{ $travel->lon  }}</a>    
                 </td>
                 <td>@include('admin-panel.travel.travel-action', [ $travel ])</td>
             </tr>
