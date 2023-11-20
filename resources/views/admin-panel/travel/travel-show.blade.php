@@ -1,7 +1,7 @@
 @extends('layouts.admin-template-app')
 
 @section('title')
-{{ __('Categories') }} {{ __('View') }}
+{{ __('Travels') }} {{ __('View') }}
 @endsection
 
 @section('style')
@@ -141,12 +141,12 @@
                                     <ul
                                         class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                                         <li class="breadcrumb-item text-muted">
-                                            <a href="" class="text-muted">{{ __('Categories') }}</a>
+                                            <a href="" class="text-muted">{{ __('Travels') }}</a>
                                         </li>
 
                                         <li class="breadcrumb-item text-muted">
                                             <a href="" class="text-muted">
-                                                {{ __( ucfirst(Request::segment(3)) . ' Categories') }}
+                                                {{ __( ucfirst(Request::segment(3)) . ' Travels') }}
                                             </a>
                                         </li>
                                     </ul>

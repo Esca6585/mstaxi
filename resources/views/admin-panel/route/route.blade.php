@@ -1,7 +1,7 @@
 @extends('layouts.admin-template-app')
 
 @section('title')
-    {{ __('Drivers') }}
+    {{ __('Routes') }}
 @endsection
 
 @section('style')
@@ -142,7 +142,7 @@
                                     <ul
                                         class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                                         <li class="breadcrumb-item text-muted">
-                                            <a href="{{ route('driver.index', [ app()->getlocale() ]) }}" class="text-muted">{{ __('Drivers') }}</a>
+                                            <a href="{{ route('route.index', [ app()->getlocale() ]) }}" class="text-muted">{{ __('Routes') }}</a>
                                         </li>
                                     </ul>
                                     <!--end::Breadcrumb-->
@@ -161,7 +161,7 @@
                             <div class="card card-custom">
                                 <div class="card-header flex-wrap py-5">
                                     <div class="card-title">
-                                        <h3 class="card-label">{{ __('Drivers') }}</h3>
+                                        <h3 class="card-label">{{ __('Routes') }}</h3>
                                     </div>
                                     <div class="card-toolbar">
                                         <!--begin::Button-->
@@ -272,7 +272,7 @@
                                     <!--end::Alert-->
 
                                     <!--begin: Datatable-->
-                                    @include('admin-panel.driver.driver-table')
+                                    @include('admin-panel.route.route-table')
                                     <!--end: Datatable-->
                                 </div>
                             </div>

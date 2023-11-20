@@ -142,7 +142,7 @@
                                     <ul
                                         class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                                         <li class="breadcrumb-item text-muted">
-                                            <a href="{{ route('driver.index', [ app()->getlocale() ]) }}" class="text-muted">{{ __('Travels') }}</a>
+                                            <a href="{{ route('travel.index', [ app()->getlocale() ]) }}" class="text-muted">{{ __('Travels') }}</a>
                                         </li>
                                     </ul>
                                     <!--end::Breadcrumb-->
@@ -272,7 +272,7 @@
                                     <!--end::Alert-->
 
                                     <!--begin: Datatable-->
-                                    @include('admin-panel.driver.driver-table')
+                                    @include('admin-panel.travel.travel-table')
                                     <!--end: Datatable-->
                                 </div>
                             </div>

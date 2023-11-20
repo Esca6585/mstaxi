@@ -43,6 +43,33 @@ class TravelController extends Controller
         ]);
     }
 
+    public function travelFinish(Request $request)
+    {
+        $travel = Travel::findOrFail($request->travel_id);
+        $tarif = Tarif::findOrFail($travel->tarif_id);
+        
+        $travel->user_id = $request->user()->id;
+        $travel->tarif_id = $request->tarif_id;
+        $travel->lat = $request->lat;
+        $travel->lon = $request->lon;
+        $travel->price = 0;
+        $travel->km = 0;
+        $travel->status = 'finished';
+        
+        $travel->update();
+
+        $night = $this->dayOrNight();
+
+        return response()->json([
+            'travel_id' => $travel->id,
+            'night' => $night,
+            'tarif_id' => $request->tarif_id,
+            'tarif' => $tarif,
+            'travel' => $travel,
+            'status' => $travel->status,
+        ]);
+    }
+
     public function routeSave(Request $request)
     {
         $travel = Travel::findOrFail($request->travel_id);
@@ -146,7 +173,7 @@ class TravelController extends Controller
     
         $calculator = new Vincenty();
     
-        $metr = $calculator->getDistance($coordinate1, $coordinate2); // returns 128130.850 (meters; ≈128 kilometers)
+        $metr = $calculator->getDistance($coordinate1, $coordinate2);
         $kilometr = $this->metrToKilometr($metr);
 
         return $kilometr;
@@ -159,7 +186,7 @@ class TravelController extends Controller
 
         $calculator = new Vincenty();
     
-        $metr = $calculator->getDistance($coordinate1, $coordinate2); // returns 128130.850 (meters; ≈128 kilometers)
+        $metr = $calculator->getDistance($coordinate1, $coordinate2);
         $kilometr = $this->metrToKilometr($metr);
 
         return $kilometr;
@@ -176,14 +203,14 @@ class TravelController extends Controller
 
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(),400);
-        } 
+        }
 
         $coordinate1 = new Coordinate($request->lat1, $request->lon1);
         $coordinate2 = new Coordinate($request->lat2, $request->lon2);
 
         $calculator = new Vincenty();
     
-        $metr = $calculator->getDistance($coordinate1, $coordinate2); // returns 128130.850 (meters; ≈128 kilometers)
+        $metr = $calculator->getDistance($coordinate1, $coordinate2);
         $kilometr = $this->metrToKilometr($metr);
 
         return $kilometr;

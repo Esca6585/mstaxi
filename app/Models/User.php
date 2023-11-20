@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Travel;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -40,4 +41,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+
+    public function travel()
+    {
+        return $this->hasOne(Travel::class);
+    }
 }
