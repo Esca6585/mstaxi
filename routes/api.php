@@ -24,7 +24,7 @@ Route::post('/login', [App\Http\Controllers\User\Auth\AuthController::class, 'lo
 
 Route::post('/me', [App\Http\Controllers\User\Auth\AuthController::class, 'me'])->middleware('auth:sanctum');
 
-Route::get('/day-or-night', [App\Http\Controllers\User\Auth\AuthController::class, 'dayOrNight'])->middleware('auth:sanctum');
+Route::get('/day-or-night', [App\Http\Controllers\User\Travel\TravelController::class, 'dayOrNight'])->middleware('auth:sanctum');
 
 Route::post('/measure-two-distance', [App\Http\Controllers\User\Travel\TravelController::class, 'measureTwoDistance'])->middleware('auth:sanctum');
 

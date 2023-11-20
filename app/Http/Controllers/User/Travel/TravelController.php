@@ -225,7 +225,7 @@ class TravelController extends Controller
     {
         $time = Carbon::now()->format('H');
 
-        if($time >= 6 && $time <= 22){
+        if($time > 6 && $time < 21){
             return 'Day';
         } else {
             return 'Night';

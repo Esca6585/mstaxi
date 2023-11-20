@@ -301,27 +301,6 @@
 
                                                     <div class="col-4">
                                                         <div class="form-group">
-                                                            <label>{{ __('every waiting price free') }}</label>
-
-                                                            <input type="text"
-                                                                class="form-control @error('every_waiting_price_free') is-invalid @enderror"
-                                                                name="every_waiting_price_free"
-                                                                placeholder="{{ __('every waiting price free') }}"
-                                                                value="{{ $tarif->every_waiting_price_free ?? '' }}{{ request()->segment(count(request()->segments())) == 'create' ? old('every_waiting_price_free') : '' }}" />
-
-                                                            @error('every_waiting_price_free')
-                                                            <div class="fv-plugins-message-container invalid-feedback">
-                                                                <div data-field="every_waiting_price_free" data-validator="notEmpty">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            </div>
-                                                            @enderror
-                                                        </div>
-
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <div class="form-group">
                                                             <label>{{ __('every minute price outside') }}</label>
 
                                                             <input type="text"

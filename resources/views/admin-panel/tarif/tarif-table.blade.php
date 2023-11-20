@@ -11,7 +11,6 @@
                 <th>{{ __('every minute price') }}</th>
                 <th>{{ __('every km price') }}</th>
                 <th>{{ __('every waiting price') }}</th>
-                <th>{{ __('every waiting price free') }}</th>
                 <th>{{ __('every minute price outside') }}</th>
                 <th>{{ __('every km price outside') }}</th>
                 <th>{{ __('Actions') }}</th>
@@ -28,7 +27,6 @@
                 <td>{{ $tarif->every_minute_price }}</td>
                 <td>{{ $tarif->every_km_price }}</td>
                 <td>{{ $tarif->every_waiting_price }}</td>
-                <td>{{ $tarif->every_waiting_price_free }}</td>
                 <td>{{ $tarif->every_minute_price_outside }}</td>
                 <td>{{ $tarif->every_km_price_outside }}</td>
                 <td>@include('admin-panel.tarif.tarif-action', [ $tarif ])</td>

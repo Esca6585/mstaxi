@@ -18,6 +18,9 @@ class Travel extends Model
         'km',
         'lat',
         'lon',
+        'lat_finish',
+        'lon_finish',
+        'time_of_waiting',
         'status',
     ];
 

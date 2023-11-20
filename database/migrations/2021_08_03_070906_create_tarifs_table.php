@@ -21,7 +21,6 @@ class CreateTarifsTable extends Migration
             $table->float('every_minute_price');
             $table->float('every_km_price');
             $table->float('every_waiting_price');
-            $table->float('every_waiting_price_free');
             $table->float('every_minute_price_outside');
             $table->float('every_km_price_outside');
             $table->string('image')->nullable();

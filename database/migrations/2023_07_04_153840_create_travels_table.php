@@ -24,7 +24,12 @@ return new class extends Migration
             
             $table->string('lat');
             $table->string('lon');
+
+            $table->string('lat_finish')->nullable();
+            $table->string('lon_finish')->nullable();
             
+            $table->string('time_of_waiting')->nullable();
+
             $table->string('status')->nullable();
 
             $table->foreign('user_id')

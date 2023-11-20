@@ -18,7 +18,6 @@ class Tarif extends Model
         'every_minute_price',
         'every_km_price',
         'every_waiting_price',
-        'every_waiting_price_free',
         'every_minute_price_outside',
         'every_km_price_outside',
         'image',

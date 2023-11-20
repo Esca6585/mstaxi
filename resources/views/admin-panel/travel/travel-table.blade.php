@@ -11,6 +11,7 @@
                 <th>{{ __('Status') }}</th>
                 <th>{{ __('Time') }}</th>
                 <th>{{ __('Latitude and Longitude') }}</th>
+                <th>{{ __('Finish') }} {{ __('Latitude and Longitude') }}</th>
                 <th>{{ __('Actions') }}</th>
             </tr>
         </thead>
@@ -38,6 +39,9 @@
                 </td>
                 <td>
                     <a href="http://www.google.com/maps/place/{{ $travel->lat  }}, {{ $travel->lon  }}/@{{ $travel->lat  }}, {{ $travel->lon  }},17z/data=!3m1!1e3" target="_blank">{{ $travel->lat  }}, {{ $travel->lon  }}</a>    
+                </td>
+                <td>
+                    <a href="http://www.google.com/maps/place/{{ $travel->lat_finish  }}, {{ $travel->lon_finish  }}/@{{ $travel->lat_finish  }}, {{ $travel->lon_finish  }},17z/data=!3m1!1e3" target="_blank">{{ $travel->lat_finish  }}, {{ $travel->lon_finish  }}</a>
                 </td>
                 <td>@include('admin-panel.travel.travel-action', [ $travel ])</td>
             </tr>

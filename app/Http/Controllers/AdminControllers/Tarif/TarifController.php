@@ -35,8 +35,8 @@ class TarifController extends Controller
                 
                 $requestData = ['name_tm', 'name_ru', 'minimum_price', 
                                 'every_minute_price', 'every_km_price', 
-                                'every_waiting_price', 'every_waiting_price_free', 
-                                'every_minute_price_outside', 'every_km_price_outside', 'image'];
+                                'every_waiting_price', 'every_minute_price_outside', 
+                                'every_km_price_outside', 'image'];
     
                 $tarifs = Tarif::where(function($q) use($requestData, $searchQuery) {
                                         foreach ($requestData as $field)
@@ -93,7 +93,6 @@ class TarifController extends Controller
         $tarif->every_minute_price = $request->every_minute_price;
         $tarif->every_km_price = $request->every_km_price;
         $tarif->every_waiting_price = $request->every_waiting_price;
-        $tarif->every_waiting_price_free = $request->every_waiting_price_free;
         $tarif->every_minute_price_outside = $request->every_minute_price_outside;
         $tarif->every_km_price_outside = $request->every_km_price_outside;
         $tarif->image = $originalImage ?? null;
@@ -162,7 +161,6 @@ class TarifController extends Controller
         $tarif->every_minute_price = $request->every_minute_price;
         $tarif->every_km_price = $request->every_km_price;
         $tarif->every_waiting_price = $request->every_waiting_price;
-        $tarif->every_waiting_price_free = $request->every_waiting_price_free;
         $tarif->every_minute_price_outside = $request->every_minute_price_outside;
         $tarif->every_km_price_outside = $request->every_km_price_outside;
         
