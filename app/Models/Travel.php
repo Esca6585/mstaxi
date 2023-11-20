@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use User;
 
 class Travel extends Model
 {
@@ -24,6 +23,6 @@ class Travel extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(App\Models\User::class);
     }
 }
