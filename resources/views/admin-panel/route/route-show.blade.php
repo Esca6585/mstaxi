@@ -1,7 +1,7 @@
 @extends('layouts.admin-template-app')
 
 @section('title')
-{{ __('Categories') }} {{ __('View') }}
+{{ __(Routes') }} {{ __('View') }}
 @endsection
 
 @section('style')
@@ -141,12 +141,12 @@
                                     <ul
                                         class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                                         <li class="breadcrumb-item text-muted">
-                                            <a href="" class="text-muted">{{ __('Categories') }}</a>
+                                            <a href="" class="text-muted">{{ __(Routes') }}</a>
                                         </li>
 
                                         <li class="breadcrumb-item text-muted">
                                             <a href="" class="text-muted">
-                                                {{ __( ucfirst(Request::segment(3)) . ' Categories') }}
+                                                {{ __( ucfirst(Request::segment(3)) . 'Routes') }}
                                             </a>
                                         </li>
                                     </ul>
@@ -171,7 +171,7 @@
                                             <div class="card card-custom card-stretch">
                                                 <div class="card-body p-0 rounded px-10 py-15 d-flex align-items-center justify-content-center"
                                                     style="background-color: #1BC5BD;">
-                                                    <img src="{{ asset($brand->image) }}" class="mw-100 w-200px"
+                                                    <img src="{{ asset($route->image) }}" class="mw-100 w-200px"
                                                         style="transform: scale(1.6);">
                                                 </div>
                                             </div>
@@ -179,12 +179,31 @@
                                         </div>
                                         <div class="col-xxl-7 pl-xxl-11">
                                             <h2 class="font-weight-bolder text-dark mb-7" style="font-size: 32px;">
-                                                {{ $brand->name }}</h2>
+                                                {{ $route->name }}</h2>
 
                                             <h5>
-                                                <a href="{{ route('category.show', [ app()->getlocale(), 'all', $brand->category_id ] ) }}"
+                                                <a href="{{ route('travel.show', [ app()->getlocale(), $route->travel->id ] ) }}"
                                                     class="text-primary">
-                                                    {{ $brand->category->{ 'name_' . app()->getlocale() } }}
+                                                    {{ $route->travel->price  }} TMT
+                                                    
+                                                    {{ $route->travel->km  }} km
+
+                                                    <span class="badge badge-{{ $route->travel->status == 'go' ? 'success' : 'warning' }}">
+                                                        {{ $route->travel->status }}
+                                                    </span>
+
+                                                    <span class="badge badge-warning">
+                                                        {{ $route->travel->created_at }}
+                                                    </span>
+                                                </a>
+                                            </h5>
+
+                                            <h5>
+                                                <a href="{{ route('user.show', [ app()->getlocale(), $route->user->id ] ) }}"
+                                                    class="text-primary">
+                                                    {{ $route->user->first_name }}
+                                                    {{ $route->user->last_name }}
+                                                    {{ $route->user->car_number }}
                                                 </a>
                                             </h5>
 
@@ -197,7 +216,7 @@
                                                 data-images-count=""
                                                 style="background-image: url();">
                                                 <div class="image-input-wrapper"
-                                                    style="background-image: url({{ asset($brand->image) }})">
+                                                    style="background-image: url({{ asset($route->image) }})">
                                                 </div>
 
                                                 <label
@@ -244,7 +263,7 @@
                                         </span>
                                     </a>
 
-                                    <a href="{{ route(Request::segment(3) . '.edit', [ app()->getlocale(), $brand->id ] ) }}"
+                                    <a href="{{ route(Request::segment(3) . '.edit', [ app()->getlocale(), $route->id ] ) }}"
                                         title="{{ __('Edit') }}" class="btn btn-warning font-weight-bolder">
                                         <span class="svg-icon svg-icon-md">
                                             <span class="svg-icon svg-icon-md svg-icon-dark">

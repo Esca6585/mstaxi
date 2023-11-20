@@ -171,24 +171,69 @@
                                             <div class="card card-custom card-stretch">
                                                 <div class="card-body p-0 rounded px-10 py-15 d-flex align-items-center justify-content-center"
                                                     style="background-color: #1BC5BD;">
-                                                    <img src="{{ asset($brand->image) }}" class="mw-100 w-200px"
-                                                        style="transform: scale(1.6);">
+                                                    <img src="{{ asset('metronic-template/v7/assets/media/svg/avatars/009-boy-4.svg') }}" alt="{{ asset('metronic-template/v7/assets/media/svg/avatars/009-boy-4.svg') }}" width="50px" >
+                                                    <h2>
+                                                        {{ $user->first_name }}
+                                                        {{ $user->last_name }}
+                                                    </h2>
+                                                    <h3>
+                                                        <span class="badge badge-{{ $user->status ? 'success' : 'danger' }}">
+                                                            {{ $user->status ? __('active') : __('inactive') }}
+                                                        </span>
+                                                    </h3>
                                                 </div>
                                             </div>
                                             <!--end::Image-->
                                         </div>
                                         <div class="col-xxl-7 pl-xxl-11">
                                             <h2 class="font-weight-bolder text-dark mb-7" style="font-size: 32px;">
-                                                {{ $brand->name }}</h2>
+                                                {{ $user->name }}</h2>
 
                                             <h5>
-                                                <a href="{{ route('category.show', [ app()->getlocale(), 'all', $brand->category_id ] ) }}"
+                                                <a href="{{ route('user.show', [ app()->getlocale(), 'all', $user->id ] ) }}"
                                                     class="text-primary">
-                                                    {{ $brand->category->{ 'name_' . app()->getlocale() } }}
+                                                    
                                                 </a>
                                             </h5>
 
                                         </div>
+                                    </div>
+
+                                    <div id="datatable">
+                                        <table class="table table-separate table-head-custom table-checkable">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>{{ __('First Name') }}</th>
+                                                    <th>{{ __('Last Name') }}</th>
+                                                    <th>{{ __('Username') }}</th>
+                                                    <th>{{ __('Car Number') }}</th>
+                                                    <th>{{ __('Car Model') }}</th>
+                                                    <th>{{ __('Status') }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($user->travel as $travel)
+                                                <tr id="datatable">
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $travel->user->first_name  }}</td>
+                                                    <td>{{ $travel->user->last_name  }}</td>
+                                                    <td>{{ $travel->user->username  }}</td>
+                                                    <td>
+                                                        <img src="{{ asset('metronic-template/v8/assets/media/flags/turkmenistan.svg') }}" alt="{{ asset('metronic-template/v8/assets/media/flags/turkmenistan.svg') }}" width="20px" >
+                                                        <span class="car__number">{{ $travel->user->car_number  }}</span>
+                                                    </td>
+                                                    <td>{{ $travel->user->car_model  }}</td>
+                                                    <td>
+                                                        <span class="badge badge-{{ $travel->status ? 'success' : 'danger' }}">
+                                                            {{ $travel->user->status ? __('active') : __('inactive') }}
+                                                        </span>
+                                                    </td>
+                                                    <td>@include('admin-panel.travel.travel-action', [ $travel ])</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>                              
                                     </div>
                                     <div class="row mb-6">
                                         <!--begin::Info-->
@@ -197,7 +242,8 @@
                                                 data-images-count=""
                                                 style="background-image: url();">
                                                 <div class="image-input-wrapper"
-                                                    style="background-image: url({{ asset($brand->image) }})">
+                                                    style="background-image: url({{ asset('metronic-template/v7/assets/media/svg/avatars/009-boy-4.svg') }})">
+
                                                 </div>
 
                                                 <label
@@ -244,7 +290,7 @@
                                         </span>
                                     </a>
 
-                                    <a href="{{ route(Request::segment(3) . '.edit', [ app()->getlocale(), $brand->id ] ) }}"
+                                    <a href="{{ route(Request::segment(3) . '.edit', [ app()->getlocale(), $user->id ] ) }}"
                                         title="{{ __('Edit') }}" class="btn btn-warning font-weight-bolder">
                                         <span class="svg-icon svg-icon-md">
                                             <span class="svg-icon svg-icon-md svg-icon-dark">

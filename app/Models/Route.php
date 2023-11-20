@@ -21,4 +21,14 @@ class Route extends Model
         'lat',
         'lon',
     ];
+
+    public function travel()
+    {
+        return $this->belongsTo(Travel::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

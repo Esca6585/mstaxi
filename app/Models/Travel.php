@@ -23,6 +23,16 @@ class Travel extends Model
 
     public function user()
     {
-        return $this->belongsTo(App\Models\User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function tarif()
+    {
+        return $this->belongsTo(Tarif::class);
+    }
+
+    public function routes()
+    {
+        return $this->hasMany(Route::class);
     }
 }

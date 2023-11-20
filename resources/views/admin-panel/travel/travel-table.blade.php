@@ -8,9 +8,10 @@
                 <th>{{ __('Username') }}</th>
                 <th>{{ __('Car Number') }}</th>
                 <th>{{ __('Car Model') }}</th>
-                <th>{{ __('Birthday') }}</th>
-                <th>{{ __('Start Working') }}</th>
+                <th>{{ __('Price') }}</th>
+                <th>{{ __('Km') }}</th>
                 <th>{{ __('Status') }}</th>
+                <th>{{ __('Time') }}</th>
                 <th>{{ __('Actions') }}</th>
             </tr>
         </thead>
@@ -23,22 +24,19 @@
                 <td>{{ $travel->user->username  }}</td>
                 <td>
                     <img src="{{ asset('metronic-template/v8/assets/media/flags/turkmenistan.svg') }}" alt="{{ asset('metronic-template/v8/assets/media/flags/turkmenistan.svg') }}" width="20px" >
-                    <span class="car__number">{{ $travel->car_number  }}</span>
+                    <span class="car__number">{{ $travel->user->car_number  }}</span>
                 </td>
-                <td>{{ $travel->car_model  }}</td>
+                <td>{{ $travel->user->car_model  }}</td>
+                <td>{{ $travel->price  }} TMT</td>
+                <td>{{ $travel->km  }} km</td>
                 <td>
-                    <span class="badge badge-primary">
-                        {{ $travel->birthday  }}
+                    <span class="badge badge-{{ $travel->status == 'go' ? 'success' : 'warning' }}">
+                        {{ $travel->status }}
                     </span>
                 </td>
                 <td>
                     <span class="badge badge-warning">
-                        {{ $travel->start_working }}
-                    </span>
-                </td>
-                <td>
-                    <span class="badge badge-{{ $travel->status ? 'success' : 'danger' }}">
-                        {{ $travel->status ? __('active') : __('inactive') }}
+                        {{ $travel->created_at }}
                     </span>
                 </td>
                 <td>@include('admin-panel.travel.travel-action', [ $travel ])</td>

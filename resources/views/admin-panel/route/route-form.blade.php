@@ -1,7 +1,7 @@
 @extends('layouts.admin-template-app')
 
 @section('title')
-{{ __('Drivers') }} {{ __( ucfirst(request()->segment(count(request()->segments())))) }}
+{{ __('Routes') }} {{ __( ucfirst(request()->segment(count(request()->segments())))) }}
 @endsection
 
 @section('style')
@@ -141,12 +141,12 @@
                                     <ul
                                         class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                                         <li class="breadcrumb-item text-muted">
-                                            <a href="{{ route('driver.index', [ app()->getlocale() ]) }}"
-                                                class="text-muted">{{ __('Drivers') }}</a>
+                                            <a href="{{ route('route.index', [ app()->getlocale() ]) }}"
+                                                class="text-muted">{{ __('Routes') }}</a>
                                         </li>
 
                                         <li class="breadcrumb-item text-muted">
-                                            <a href="{{ route('driver.index', [ app()->getlocale() ]) }}"
+                                            <a href="{{ route('route.index', [ app()->getlocale() ]) }}"
                                                 class="text-muted"> {{ __( ucfirst(request()->segment(count(request()->segments())))) }}
                                             </a>
                                         </li>
@@ -176,9 +176,9 @@
 
                                 </div>
                                 <!--begin::Form-->
-                                @if($driver->id)
+                                @if($route->id)
                                 <form
-                                    action="{{ route(Request::segment(3) . '.update', [ app()->getlocale(), $driver->id ] ) }}"
+                                    action="{{ route(Request::segment(3) . '.update', [ app()->getlocale(), $route->id ] ) }}"
                                     method="post" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
@@ -200,7 +200,7 @@
                                                                 class="form-control @error('first_name') is-invalid @enderror"
                                                                 name="first_name"
                                                                 placeholder="{{ __('First Name') }}"
-                                                                value="{{ $driver->first_name }}{{ request()->segment(count(request()->segments())) == 'create' ? old('first_name') : '' }}" />
+                                                                value="{{ $route->first_name }}{{ request()->segment(count(request()->segments())) == 'create' ? old('first_name') : '' }}" />
 
                                                             @error('first_name')
                                                             <div class="fv-plugins-message-container invalid-feedback">
@@ -221,7 +221,7 @@
                                                                 class="form-control @error('last_name') is-invalid @enderror"
                                                                 name="last_name"
                                                                 placeholder="{{ __('Last Name') }}"
-                                                                value="{{ $driver->last_name }}{{ request()->segment(count(request()->segments())) == 'create' ? old('last_name') : '' }}" />
+                                                                value="{{ $route->last_name }}{{ request()->segment(count(request()->segments())) == 'create' ? old('last_name') : '' }}" />
 
                                                             @error('last_name')
                                                             <div class="fv-plugins-message-container invalid-feedback">
@@ -242,7 +242,7 @@
                                                                 class="form-control @error('car_number') is-invalid @enderror"
                                                                 name="car_number"
                                                                 placeholder="{{ __('Car Number') }}"
-                                                                value="{{ $driver->car_number }}{{ request()->segment(count(request()->segments())) == 'create' ? old('car_number') : '' }}" />
+                                                                value="{{ $route->car_number }}{{ request()->segment(count(request()->segments())) == 'create' ? old('car_number') : '' }}" />
 
                                                             @error('car_number')
                                                             <div class="fv-plugins-message-container invalid-feedback">
@@ -263,7 +263,7 @@
                                                                 class="form-control @error('car_model') is-invalid @enderror"
                                                                 name="car_model"
                                                                 placeholder="{{ __('Car Model') }}"
-                                                                value="{{ $driver->car_model }}{{ request()->segment(count(request()->segments())) == 'create' ? old('car_model') : '' }}" />
+                                                                value="{{ $route->car_model }}{{ request()->segment(count(request()->segments())) == 'create' ? old('car_model') : '' }}" />
 
                                                             @error('car_model')
                                                             <div class="fv-plugins-message-container invalid-feedback">
@@ -297,7 +297,7 @@
                                                         </div>
 
                                                         <script>
-                                                            document.getElementById("dateFieldBirthday").value = new Date("{{ $driver->birthday }}").toISOString().substring(0, 10)
+                                                            document.getElementById("dateFieldBirthday").value = new Date("{{ $route->birthday }}").toISOString().substring(0, 10)
                                                         </script>
 
                                                     </div>
@@ -322,7 +322,7 @@
                                                         </div>
                                                         
                                                         <script>
-                                                            document.getElementById("dateFieldStartWorking").value = new Date("{{ $driver->start_working }}").toISOString().substring(0, 10)
+                                                            document.getElementById("dateFieldStartWorking").value = new Date("{{ $route->start_working }}").toISOString().substring(0, 10)
                                                         </script>
 
                                                     </div>
@@ -335,7 +335,7 @@
                                                                 class="form-control @error('username') is-invalid @enderror"
                                                                 name="username"
                                                                 placeholder="{{ __('Username') }}"
-                                                                value="{{ $driver->username }}{{ request()->segment(count(request()->segments())) == 'create' ? old('username') : '' }}" />
+                                                                value="{{ $route->username }}{{ request()->segment(count(request()->segments())) == 'create' ? old('username') : '' }}" />
 
                                                             @error('username')
                                                             <div class="fv-plugins-message-container invalid-feedback">
@@ -400,7 +400,7 @@
                                                                 class="form-control @error('status') is-invalid @enderror"
                                                                 name="status"
                                                                 placeholder="{{ __('Status') }}"
-                                                                value="{{ $driver->status }}{{ request()->segment(count(request()->segments())) == 'create' ? old('status') : '' }}" >
+                                                                value="{{ $route->status }}{{ request()->segment(count(request()->segments())) == 'create' ? old('status') : '' }}" >
                                                                 <option value="1">{{ __('active') }}</option>
                                                                 <option value="0">{{ __('inactive') }}</option>
                                                             </select>
@@ -437,12 +437,12 @@
                                             </a>
 
                                             <button type="submit"
-                                                title="{{ $driver->id ? __('Edit') : __('Create') }}"
-                                                class="btn {{ $driver->id ? 'btn-warning' : 'btn-primary' }} font-weight-bolder">
+                                                title="{{ $route->id ? __('Edit') : __('Create') }}"
+                                                class="btn {{ $route->id ? 'btn-warning' : 'btn-primary' }} font-weight-bolder">
                                                 <span class="svg-icon svg-icon-md">
-                                                    @if($driver->id)
+                                                    @if($route->id)
                                                     <span
-                                                        class="svg-icon svg-icon-md {{ $driver->id ? 'svg-icon-dark' : '' }}">
+                                                        class="svg-icon svg-icon-md {{ $route->id ? 'svg-icon-dark' : '' }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                                                             height="24px" viewBox="0 0 24 24" version="1.1">
@@ -481,8 +481,8 @@
                                                     </svg>
                                                     @endif
                                                 </span>
-                                                <span class="{{ $driver->id ? 'text-dark' : '' }}">
-                                                    {{ $driver->id ? __('Edit') : __('Create') }}
+                                                <span class="{{ $route->id ? 'text-dark' : '' }}">
+                                                    {{ $route->id ? __('Edit') : __('Create') }}
                                                 </span>
                                             </button>
                                         </div>
