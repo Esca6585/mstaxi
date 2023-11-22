@@ -25,11 +25,6 @@ return new class extends Migration
             $table->float('price')->nullable();
             $table->float('km')->nullable();
 
-            $table->string('city')->nullable();
-
-            $table->polygon('area')->nullable();
-
-            
             $table->foreign('travel_id')
                 ->references('id')
                 ->on('travels')

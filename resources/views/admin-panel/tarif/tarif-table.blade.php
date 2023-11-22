@@ -23,12 +23,36 @@
                 <td>{{ $tarif->name_tm }}</td>
                 <td>{{ $tarif->name_ru }}</td>
                 <td><img src="{{ asset($tarif->image) }}" alt="{{ $tarif->image }}" width="50px"></td>
-                <td>{{ $tarif->minimum_price }}</td>
-                <td>{{ $tarif->every_minute_price }}</td>
-                <td>{{ $tarif->every_km_price }}</td>
-                <td>{{ $tarif->every_waiting_price }}</td>
-                <td>{{ $tarif->every_minute_price_outside }}</td>
-                <td>{{ $tarif->every_km_price_outside }}</td>
+                <td>
+                    <span class="badge badge-warning">
+                        {{ $tarif->minimum_price }} TMT
+                    </span>
+                </td>
+                <td>
+                    <span class="badge badge-primary">
+                        {{ $tarif->every_minute_price }} TMT
+                    </span>
+                </td>
+                <td>
+                    <span class="badge badge-primary">
+                        {{ $tarif->every_km_price }} TMT
+                    </span>
+                </td>
+                <td>
+                    <span class="badge badge-success">
+                        {{ $tarif->every_waiting_price }} TMT
+                    </span>
+                </td>
+                <td>
+                    <span class="badge badge-danger">
+                        {{ $tarif->every_minute_price_outside }} TMT
+                    </span>
+                </td>
+                <td>
+                    <span class="badge badge-danger">
+                        {{ $tarif->every_km_price_outside }} TMT
+                    </span>
+                </td>
                 <td>@include('admin-panel.tarif.tarif-action', [ $tarif ])</td>
             </tr>
             @endforeach

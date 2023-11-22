@@ -37,7 +37,7 @@
                     </span>
                 </td>
                 <td>
-                    <a href="http://www.google.com/maps/place/{{ $route->lat  }}, {{ $route->lon  }}/@{{ $route->lat  }}, {{ $route->lon  }},17z/data=!3m1!1e3" target="_blank">{{ $route->lat  }}, {{ $route->lon  }}</a>
+                    <a href="http://www.google.com/maps/place/{{ $route->lat }}, {{ $route->lon }}/{{ '@' . $route->lat }}, {{ $route->lon }},17z/data=!3m1!1e3" target="_blank">{{ $route->lat }}, {{ $route->lon }}</a>    
                 </td>
                 <td>@include('admin-panel.route.route-action', [ $route ])</td>
             </tr>

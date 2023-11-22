@@ -30,7 +30,6 @@ class TarifRequest extends FormRequest
             'every_minute_price' => 'required',
             'every_km_price' => 'required',
             'every_waiting_price' => 'required',
-            'every_waiting_price_free' => 'required',
             'every_minute_price_outside' => 'required',
             'every_km_price_outside' => 'required',
             'image' => 'nullable',

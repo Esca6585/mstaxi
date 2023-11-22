@@ -15,6 +15,7 @@
         "laravel/framework": "^9.0",
         "laravel/jetstream": "^3.0",
         "laravel/sanctum": "^2.14.1",
+        "laravel/scout": "^10.5",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.1",
         "mjaschen/phpgeo": "4.0",

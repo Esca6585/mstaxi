@@ -16,8 +16,6 @@ class Route extends Model
         'user_id',
         'price',
         'km',
-        'city',
-        'area',
         'lat',
         'lon',
     ];

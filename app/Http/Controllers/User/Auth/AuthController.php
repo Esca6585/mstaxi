@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Str;
 
 class AuthController extends Controller
 {
@@ -57,6 +58,17 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
+        ]);
+    }
+
+    public function logout()
+    {
+        $tokenId = Str::before(request()->bearerToken(), '|');
+        
+        auth()->user()->tokens()->where('id', $tokenId )->delete();
+
+        return response()->json([
+            'token' => 'Your token is deleted!',
         ]);
     }
 

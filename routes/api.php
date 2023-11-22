@@ -22,7 +22,11 @@ Route::post('/register', [App\Http\Controllers\User\Auth\AuthController::class, 
 
 Route::post('/login', [App\Http\Controllers\User\Auth\AuthController::class, 'login']);
 
+Route::post('/logout', [App\Http\Controllers\User\Auth\AuthController::class, 'logout'])->middleware('auth:sanctum');
+
 Route::post('/me', [App\Http\Controllers\User\Auth\AuthController::class, 'me'])->middleware('auth:sanctum');
+
+Route::get('/tarifs', [App\Http\Controllers\User\Travel\TravelController::class, 'tarifs'])->middleware('auth:sanctum');
 
 Route::get('/day-or-night', [App\Http\Controllers\User\Travel\TravelController::class, 'dayOrNight'])->middleware('auth:sanctum');
 

@@ -15,8 +15,24 @@ use DateTime;
 
 class TravelController extends Controller
 {
+    public function tarifs(Request $request)
+    {
+        $tarifs = Tarif::all();
+
+        return response()->json([
+            'tarifs' => $tarifs,
+        ]);
+    }
+
     public function travelStart(Request $request)
     {
+        $validator =  Validator::make($request->all(),[
+            'tarif_id' => 'required',
+            'lat' => 'required',
+            'lon' => 'required',
+            'minimum_price' => 'required',
+        ]);
+
         $tarif = Tarif::findOrFail($request->tarif_id);
 
         $travel = new Travel();
@@ -25,7 +41,7 @@ class TravelController extends Controller
         $travel->tarif_id = $request->tarif_id;
         $travel->lat = $request->lat;
         $travel->lon = $request->lon;
-        $travel->price = 0;
+        $travel->price = $tarif->minimum_price;
         $travel->km = 0;
         $travel->status = 'waiting';
         
@@ -48,12 +64,9 @@ class TravelController extends Controller
         $travel = Travel::findOrFail($request->travel_id);
         $tarif = Tarif::findOrFail($travel->tarif_id);
         
-        $travel->user_id = $request->user()->id;
-        $travel->tarif_id = $request->tarif_id;
-        $travel->lat = $request->lat;
-        $travel->lon = $request->lon;
-        $travel->price = 0;
-        $travel->km = 0;
+        $travel->lat_finish = $request->lat_finish;
+        $travel->lon_finish = $request->lon_finish;
+        $travel->time_of_waiting = $request->time_of_waiting;
         $travel->status = 'finished';
         
         $travel->update();

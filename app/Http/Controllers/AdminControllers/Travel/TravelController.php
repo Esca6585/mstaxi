@@ -35,12 +35,15 @@ class TravelController extends Controller
             if($request->search) {
                 $searchQuery = trim($request->query('search'));
                 
-                $requestData = ['driver_id', 'route_id', 'price', 'km'];
+                $requestData = ['price', 'km', 'lat', 'lon', 'lat_finish', 'lon_finish', 'time_of_waiting', 'status', 'first_name', 'last_name', 'car_number', 'car_model', 'birthday', 'start_working', 'username', 'status',];
     
-                $travels = Travel::where(function($q) use($requestData, $searchQuery) {
-                                        foreach ($requestData as $field)
-                                        $q->orWhere($field, 'like', "%{$searchQuery}%");
-                                })->paginate($pagination);
+                $travels = Travel::whereHas('user', function($q) use($requestData, $searchQuery) {
+                                    foreach ($requestData as $field)
+                                    $q->orWhere($field, 'like', "%{$searchQuery}%");
+                                })->with(['user' => function($q) use ($requestData, $searchQuery){
+                                    foreach ($requestData as $field)
+                                    $q->orWhere($field, 'like', "%{$searchQuery}%");
+                                }])->paginate($pagination);
             }
             
             return view('admin-panel.travel.travel-table', compact('travels', 'pagination'))->render();
