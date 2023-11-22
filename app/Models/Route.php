@@ -20,6 +20,33 @@ class Route extends Model
         'lon',
     ];
 
+    public function toSearchableArray()
+    {
+        return [
+            'price' => '',
+            'km' => '',
+            'lat' => '',
+            'lon' => '',
+            'travel.price' => '',
+            'travel.km' => '',
+            'travel.lat' => '',
+            'travel.lon' => '',
+            'travel.lat_finish' => '',
+            'travel.lon_finish' => '',
+            'travel.time_of_waiting' => '',
+            'travel.status' => '',
+            'user.first_name' => '',
+            'user.last_name' => '',
+            'user.car_number' => '',
+            'user.car_model' => '',
+            'user.birthday' => '',
+            'user.start_working' => '',
+            'user.username' => '',
+            'user.password' => '',
+            'user.status' => '',
+        ];
+    }
+
     public function travel()
     {
         return $this->belongsTo(Travel::class);

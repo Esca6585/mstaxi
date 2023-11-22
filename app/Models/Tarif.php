@@ -20,6 +20,7 @@ class Tarif extends Model
         'every_waiting_price',
         'every_minute_price_outside',
         'every_km_price_outside',
+        'additional_tarif',
         'image',
     ];
 }

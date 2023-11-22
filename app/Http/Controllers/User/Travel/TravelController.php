@@ -17,7 +17,11 @@ class TravelController extends Controller
 {
     public function tarifs(Request $request)
     {
-        $tarifs = Tarif::all();
+        $validator =  Validator::make($request->all(),[
+            'additional_tarif' => 'required',
+        ]);
+
+        $tarifs = Tarif::where('additional_tarif', $validator->additional_tarif)->get();
 
         return response()->json([
             'tarifs' => $tarifs,

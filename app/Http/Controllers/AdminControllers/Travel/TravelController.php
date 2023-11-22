@@ -35,15 +35,22 @@ class TravelController extends Controller
             if($request->search) {
                 $searchQuery = trim($request->query('search'));
                 
-                $requestData = ['price', 'km', 'lat', 'lon', 'lat_finish', 'lon_finish', 'time_of_waiting', 'status', 'first_name', 'last_name', 'car_number', 'car_model', 'birthday', 'start_working', 'username', 'status',];
+                $requestData = ['price', 'km', 'lat', 'lon', 'lat_finish', 'lon_finish', 'time_of_waiting', 'status',];
     
-                $travels = Travel::whereHas('user', function($q) use($requestData, $searchQuery) {
+                $travels = Travel::where(function($q) use($requestData, $searchQuery) {
                                     foreach ($requestData as $field)
                                     $q->orWhere($field, 'like', "%{$searchQuery}%");
-                                })->with(['user' => function($q) use ($requestData, $searchQuery){
-                                    foreach ($requestData as $field)
-                                    $q->orWhere($field, 'like', "%{$searchQuery}%");
-                                }])->paginate($pagination);
+                            })->paginate($pagination);
+
+                $products = Travel::search(
+                    trim($request->get('search')) ?? ''
+                )
+                    ->query(function ($query) {
+                        $query->join('travels', 'users.travel_id', 'travels.id')
+                        ->select(['users.id', 'users.id', 'users.id'])
+                            ->orderBy('users.id', 'DESC');
+                    })
+                    ->paginate(5);
             }
             
             return view('admin-panel.travel.travel-table', compact('travels', 'pagination'))->render();
