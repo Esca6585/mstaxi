@@ -79,13 +79,13 @@ class TarifSeeder extends Seeder
                 // id=6
             [
                 'name_tm' => 'Haýwanlar',
-                'name_ru' => '',
-                'minimum_price' => 4.0,
-                'every_minute_price' => 5.0,
-                'every_km_price' => 5.0,
-                'every_waiting_price' => 5.0,
-                'every_minute_price_outside' => 15.0,
-                'every_km_price_outside' => 15.0,
+                'name_ru' => 'Животные',
+                'minimum_price' => 0.0,
+                'every_minute_price' => 0.0,
+                'every_km_price' => 0.0,
+                'every_waiting_price' => 0.0,
+                'every_minute_price_outside' => 0.0,
+                'every_km_price_outside' => 0.0,
                 'image' => 'mstaxi/vip_tarif.svg',
             ],
         ];

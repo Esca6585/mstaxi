@@ -30,7 +30,6 @@ class TravelController extends Controller
             'tarif_id' => 'required',
             'lat' => 'required',
             'lon' => 'required',
-            'minimum_price' => 'required',
         ]);
 
         $tarif = Tarif::findOrFail($request->tarif_id);
