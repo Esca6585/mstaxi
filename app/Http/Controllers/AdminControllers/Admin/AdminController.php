@@ -38,9 +38,9 @@ class AdminController extends Controller
                 $requestData = ['first_name', 'last_name', 'username'];
                 
                 $admins = Admin::where(function($q) use($requestData, $searchQuery) {
-                                        foreach ($requestData as $field)
-                                        $q->orWhere($field, 'like', "%{$searchQuery}%");
-                                })->paginate($pagination);
+                    foreach ($requestData as $field)
+                    $q->orWhere($field, 'like', "%{$searchQuery}%");
+                })->paginate($pagination);
             }
             
             return view('admin-panel.admin.admin-table', compact('admins', 'pagination'))->render();

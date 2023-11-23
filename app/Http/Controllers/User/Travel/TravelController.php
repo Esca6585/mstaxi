@@ -17,7 +17,6 @@ class TravelController extends Controller
 {
     public function tarifs(Request $request)
     {
-        return $request->additional_tarif;
         $tarifs = Tarif::where('additional_tarif', $request->additional_tarif)->get();
 
         return response()->json([

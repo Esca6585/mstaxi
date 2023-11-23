@@ -24,7 +24,7 @@
     type="text/css" />
 <link href="{{ asset('metronic-template/v7/assets/css/themes/layout/header/menu/light.css') }}" rel="stylesheet"
     type="text/css" />
-<link href="{{ asset('metronic-template/v7/assets/css/themes/layout/brand/dark.css') }}" rel="stylesheet"
+<link href="{{ asset('metronic-template/v7/assets/css/themes/layout/travel/dark.css') }}" rel="stylesheet"
     type="text/css" />
 <link href="{{ asset('metronic-template/v7/assets/css/themes/layout/aside/dark.css') }}" rel="stylesheet"
     type="text/css" />
@@ -83,13 +83,13 @@
         <div class="d-flex flex-row flex-column-fluid page">
             <!--begin::Aside-->
             <div class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" id="kt_aside">
-                <!--begin::Brand-->
-                <div class="brand flex-column-auto" id="kt_brand">
+                <!--begin::travel-->
+                <div class="travel flex-column-auto" id="kt_travel">
                     <!--begin::Logo-->
                     @include('layouts.logo')
                     <!--end::Logo-->
                     <!--begin::Toggle-->
-                    <button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
+                    <button class="travel-toggle btn btn-sm px-0" id="kt_aside_toggle">
                         <span class="svg-icon svg-icon svg-icon-xl">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-left.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -111,7 +111,7 @@
                     </button>
                     <!--end::Toolbar-->
                 </div>
-                <!--end::Brand-->
+                <!--end::travel-->
                 <!--begin::Aside Menu-->
                 @include('layouts.sidebar')
                 <!--end::Aside Menu-->
@@ -171,7 +171,7 @@
                                             <div class="card card-custom card-stretch">
                                                 <div class="card-body p-0 rounded px-10 py-15 d-flex align-items-center justify-content-center"
                                                     style="background-color: #1BC5BD;">
-                                                    <img src="{{ asset($brand->image) }}" class="mw-100 w-200px"
+                                                    <img src="{{ asset($travel->image) }}" class="mw-100 w-200px"
                                                         style="transform: scale(1.6);">
                                                 </div>
                                             </div>
@@ -179,12 +179,12 @@
                                         </div>
                                         <div class="col-xxl-7 pl-xxl-11">
                                             <h2 class="font-weight-bolder text-dark mb-7" style="font-size: 32px;">
-                                                {{ $brand->name }}</h2>
+                                                {{ $travel->name }}</h2>
 
                                             <h5>
-                                                <a href="{{ route('category.show', [ app()->getlocale(), 'all', $brand->category_id ] ) }}"
+                                                <a href="{{ route('category.show', [ app()->getlocale(), 'all', $travel->category_id ] ) }}"
                                                     class="text-primary">
-                                                    {{ $brand->category->{ 'name_' . app()->getlocale() } }}
+                                                    {{ $travel->category->{ 'name_' . app()->getlocale() } }}
                                                 </a>
                                             </h5>
 
@@ -197,7 +197,7 @@
                                                 data-images-count=""
                                                 style="background-image: url();">
                                                 <div class="image-input-wrapper"
-                                                    style="background-image: url({{ asset($brand->image) }})">
+                                                    style="background-image: url({{ asset($travel->image) }})">
                                                 </div>
 
                                                 <label
@@ -244,7 +244,7 @@
                                         </span>
                                     </a>
 
-                                    <a href="{{ route(Request::segment(3) . '.edit', [ app()->getlocale(), $brand->id ] ) }}"
+                                    <a href="{{ route(Request::segment(3) . '.edit', [ app()->getlocale(), $travel->id ] ) }}"
                                         title="{{ __('Edit') }}" class="btn btn-warning font-weight-bolder">
                                         <span class="svg-icon svg-icon-md">
                                             <span class="svg-icon svg-icon-md svg-icon-dark">

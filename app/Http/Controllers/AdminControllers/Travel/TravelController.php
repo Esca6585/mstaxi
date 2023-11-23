@@ -37,20 +37,35 @@ class TravelController extends Controller
                 
                 $requestData = ['price', 'km', 'lat', 'lon', 'lat_finish', 'lon_finish', 'time_of_waiting', 'status',];
     
-                $travels = Travel::where(function($q) use($requestData, $searchQuery) {
-                                    foreach ($requestData as $field)
-                                    $q->orWhere($field, 'like', "%{$searchQuery}%");
-                            })->paginate($pagination);
-
-                $products = Travel::search(
-                    trim($request->get('search')) ?? ''
-                )
-                    ->query(function ($query) {
-                        $query->join('travels', 'users.travel_id', 'travels.id')
-                        ->select(['users.id', 'users.id', 'users.id'])
-                            ->orderBy('users.id', 'DESC');
+                $travels = Travel::where(function($query) use ($searchQuery){
+                        $query->where('price', 'like', "%$searchQuery%")
+                        ->orWhere('km', 'like', "%$searchQuery%")
+                        ->orWhere('lat', 'like', "%$searchQuery%")
+                        ->orWhere('lon', 'like', "%$searchQuery%");
                     })
-                    ->paginate(5);
+                    ->orWhereHas('user', function($query) use($searchQuery){
+                        $query->where('first_name', 'like', "%$searchQuery%");
+                        $query->where('last_name', 'like', "%$searchQuery%");
+                        $query->where('car_number', 'like', "%$searchQuery%");
+                        $query->where('car_model', 'like', "%$searchQuery%");
+                        $query->where('birthday', 'like', "%$searchQuery%");
+                        $query->where('start_working', 'like', "%$searchQuery%");
+                        $query->where('birthday', 'like', "%$searchQuery%");
+                        $query->where('status', 'like', "%$searchQuery%");
+                    })
+                    ->orWhereHas('tarif', function($query) use($searchQuery){
+                        $query->where('name_tm', 'like', "%$searchQuery%");
+                        $query->where('name_ru', 'like', "%$searchQuery%");
+                        $query->where('minimum_price', 'like', "%$searchQuery%");
+                        $query->where('every_minute_price', 'like', "%$searchQuery%");
+                        $query->where('every_km_price', 'like', "%$searchQuery%");
+                        $query->where('every_waiting_price', 'like', "%$searchQuery%");
+                        $query->where('every_minute_price_outside', 'like', "%$searchQuery%");
+                        $query->where('every_km_price_outside', 'like', "%$searchQuery%");
+                        $query->where('additional_tarif', 'like', "%$searchQuery%");
+                        $query->where('image', 'like', "%$searchQuery%");
+                    })
+                    ->paginate($pagination);
             }
             
             return view('admin-panel.travel.travel-table', compact('travels', 'pagination'))->render();
