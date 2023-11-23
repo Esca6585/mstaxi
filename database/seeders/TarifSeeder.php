@@ -26,7 +26,7 @@ class TarifSeeder extends Seeder
                 'every_waiting_price' => 1.0,
                 'every_minute_price_outside' => 3.0,
                 'every_km_price_outside' => 3.0,
-                'additional_tarif' => false,
+                'additional_tarif' => 0,
                 'image' => 'mstaxi/tarif-seeder/standart_tarif.svg',
             ],
                 // id=2
@@ -39,7 +39,7 @@ class TarifSeeder extends Seeder
                 'every_waiting_price' => 2.0,
                 'every_minute_price_outside' => 5.0,
                 'every_km_price_outside' => 5.0,
-                'additional_tarif' => false,
+                'additional_tarif' => 0,
                 'image' => 'mstaxi/tarif-seeder/sienna_tarif.svg',
             ],
                 // id=3
@@ -52,7 +52,7 @@ class TarifSeeder extends Seeder
                 'every_waiting_price' => 3.0,
                 'every_minute_price_outside' => 7.0,
                 'every_km_price_outside' => 7.0,
-                'additional_tarif' => false,
+                'additional_tarif' => 0,
                 'image' => 'mstaxi/tarif-seeder/gruz_tarif.svg',
             ],
                 // id=4
@@ -65,7 +65,7 @@ class TarifSeeder extends Seeder
                 'every_waiting_price' => 4.0,
                 'every_minute_price_outside' => 10.0,
                 'every_km_price_outside' => 10.0,
-                'additional_tarif' => false,
+                'additional_tarif' => 0,
                 'image' => 'mstaxi/tarif-seeder/sienna_tarif.svg',
             ],
                 // id=5
@@ -78,7 +78,7 @@ class TarifSeeder extends Seeder
                 'every_waiting_price' => 5.0,
                 'every_minute_price_outside' => 15.0,
                 'every_km_price_outside' => 15.0,
-                'additional_tarif' => false,
+                'additional_tarif' => 0,
                 'image' => 'mstaxi/tarif-seeder/vip_tarif.svg',
             ],
                 // id=6
@@ -91,7 +91,7 @@ class TarifSeeder extends Seeder
                 'every_waiting_price' => 0.0,
                 'every_minute_price_outside' => 0.0,
                 'every_km_price_outside' => 0.0,
-                'additional_tarif' => true,
+                'additional_tarif' => 1,
                 'image' => 'mstaxi/tarif-seeder/bagage_additional_tarif.png',
             ],
                 // id=7
@@ -104,7 +104,7 @@ class TarifSeeder extends Seeder
                 'every_waiting_price' => 0.0,
                 'every_minute_price_outside' => 0.0,
                 'every_km_price_outside' => 0.0,
-                'additional_tarif' => true,
+                'additional_tarif' => 1,
                 'image' => 'mstaxi/tarif-seeder/money_additional_tarif.png',
             ],
                 // id=8
@@ -117,7 +117,7 @@ class TarifSeeder extends Seeder
                 'every_waiting_price' => 0.0,
                 'every_minute_price_outside' => 0.0,
                 'every_km_price_outside' => 0.0,
-                'additional_tarif' => true,
+                'additional_tarif' => 1,
                 'image' => 'mstaxi/tarif-seeder/animal_additional_tarif.png',
             ],
                 // id=9
@@ -130,7 +130,7 @@ class TarifSeeder extends Seeder
                 'every_waiting_price' => 0.0,
                 'every_minute_price_outside' => 0.0,
                 'every_km_price_outside' => 0.0,
-                'additional_tarif' => true,
+                'additional_tarif' => 1,
                 'image' => 'mstaxi/tarif-seeder/child_additional_tarif.png',
             ],
         ];
@@ -147,6 +147,7 @@ class TarifSeeder extends Seeder
                 'every_waiting_price' => $tarif['every_waiting_price'],
                 'every_minute_price_outside' => $tarif['every_minute_price_outside'],
                 'every_km_price_outside' => $tarif['every_km_price_outside'],
+                'additional_tarif' => $tarif['additional_tarif'],
                 'image' => $tarif['image'],
             ]); 
         }

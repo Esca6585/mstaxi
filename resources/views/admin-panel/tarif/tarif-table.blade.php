@@ -13,6 +13,7 @@
                 <th>{{ __('every waiting price') }}</th>
                 <th>{{ __('every minute price outside') }}</th>
                 <th>{{ __('every km price outside') }}</th>
+                <th>{{ __('additional tarif') }}</th>
                 <th>{{ __('Actions') }}</th>
             </tr>
         </thead>
@@ -52,6 +53,17 @@
                     <span class="badge badge-danger">
                         {{ $tarif->every_km_price_outside }} TMT
                     </span>
+                </td>
+                <td>
+                    @if($tarif->additional_tarif)
+                    <span class="badge badge-secondary">
+                        {{ __('additional tarif') }}
+                    </span>
+                    @else
+                    <span class="badge badge-warning">
+                        {{ __('not additional tarif') }}
+                    </span>
+                    @endif
                 </td>
                 <td>@include('admin-panel.tarif.tarif-action', [ $tarif ])</td>
             </tr>

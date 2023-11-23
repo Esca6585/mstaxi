@@ -17,7 +17,8 @@ class TravelController extends Controller
 {
     public function tarifs(Request $request)
     {
-        $tarifs = Tarif::where('additional_tarif', 1)->get();
+        return $request->additional_tarif;
+        $tarifs = Tarif::where('additional_tarif', $request->additional_tarif)->get();
 
         return response()->json([
             'tarifs' => $tarifs,
@@ -65,7 +66,6 @@ class TravelController extends Controller
         
         $travel->lat_finish = $request->lat_finish;
         $travel->lon_finish = $request->lon_finish;
-        $travel->time_of_waiting = $request->time_of_waiting;
         $travel->status = 'finished';
         
         $travel->update();

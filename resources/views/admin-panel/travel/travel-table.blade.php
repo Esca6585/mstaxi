@@ -27,7 +27,7 @@
                 <td>{{ $travel->price  }} TMT</td>
                 <td>{{ $travel->km  }} km</td>
                 <td>
-                    <span class="badge badge-{{ $travel->status == 'go' ? 'success' : 'warning' }}">
+                    <span class="@if($travel->status == 'go') badge badge-success @elseif($travel->status == 'waiting') badge badge-warning @else badge badge-primary @endif">
                         {{ $travel->status }}
                     </span>
                 </td>
@@ -35,8 +35,8 @@
                     <span class="badge badge-warning">
                         {{ $travel->created_at }}
                     </span>
-                    <hr>
                     @if($travel->time_of_waiting)
+                    <hr>
                     <span class="badge badge-secondary">
                         {{ $travel->time_of_waiting }}
                     </span>
@@ -44,8 +44,8 @@
                 </td>
                 <td>
                     <a href="http://www.google.com/maps/place/{{ $travel->lat }}, {{ $travel->lon }}/{{ '@' . $travel->lat }}, {{ $travel->lon }},17z/data=!3m1!1e3" target="_blank">start: {{ $travel->lat }}, {{ $travel->lon }}</a>    
-                    
                     @if($travel->lat_finish && $travel->lon_finish)
+                    <hr>
                     <a href="http://www.google.com/maps/place/{{ $travel->lat_finish }}, {{ $travel->lon_finish }}/{{ '@' . $travel->lat_finish }}, {{ $travel->lon_finish }},17z/data=!3m1!1e3" target="_blank">finish: {{ $travel->lat_finish }}, {{ $travel->lon_finish }}</a>    
                     @endif
                 </td>
