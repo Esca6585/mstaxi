@@ -17,11 +17,7 @@ class TravelController extends Controller
 {
     public function tarifs(Request $request)
     {
-        $validator =  Validator::make($request->all(),[
-            'additional_tarif' => 'required',
-        ]);
-
-        $tarifs = Tarif::where('additional_tarif', $validator->additional_tarif)->get();
+        $tarifs = Tarif::where('additional_tarif', 1)->get();
 
         return response()->json([
             'tarifs' => $tarifs,
@@ -109,6 +105,8 @@ class TravelController extends Controller
                 $wait_price = $diffInMinutes * $tarif->every_waiting_price;
 
                 $travel->price = $travel->price + $wait_price;
+                $travel->time_of_waiting = $diffInMinutes;
+
                 $travel->update();
             }
 
@@ -175,6 +173,7 @@ class TravelController extends Controller
         $route->save();
         
         $travel->km += $route->km;
+        $travel->price += ($travel->km*$tarif->every_km_price);
         $travel->price += ($travel->km*$tarif->every_km_price);
         
         $travel->update();
