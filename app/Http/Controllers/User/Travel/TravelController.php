@@ -26,12 +26,6 @@ class TravelController extends Controller
 
     public function travelStart(Request $request)
     {
-        $validator =  Validator::make($request->all(),[
-            'tarif_id' => 'required',
-            'lat' => 'required',
-            'lon' => 'required',
-        ]);
-
         $tarif = Tarif::findOrFail($request->tarif_id);
 
         $travel = new Travel();
@@ -43,6 +37,12 @@ class TravelController extends Controller
         $travel->price = $tarif->minimum_price;
         $travel->km = 0;
         $travel->status = 'waiting';
+        $travel->minimum_price = $tarif->minimum_price;
+        $travel->minute_price = $tarif->every_minute_price;
+        $travel->km_price += $tarif->every_km_price;
+        $travel->waiting_price = $tarif->every_waiting_price;
+        $travel->minute_price_outside = $tarif->every_minute_price_outside;
+        $travel->km_price_outside = $tarif->every_km_price_outside;
         
         $travel->save();
 
@@ -63,6 +63,10 @@ class TravelController extends Controller
         $travel = Travel::findOrFail($request->travel_id);
         $tarif = Tarif::findOrFail($travel->tarif_id);
         
+        $lastRoute = Route::latest('created_at')->where('travel_id', $travel->id)->where('user_id', $request->user()->id)->first();
+
+        $this->saveToRouteDBfinish($lastRoute, $request, $tarif);
+
         $travel->lat_finish = $request->lat_finish;
         $travel->lon_finish = $request->lon_finish;
         $travel->status = 'finished';
@@ -90,21 +94,18 @@ class TravelController extends Controller
 
         if($travel->status == 'waiting'){
             $metr = $this->waitingMeasureDistance($request->travel_id, $request);
-            
-            $now = Carbon::now()->toDateTimeString();
-            
-            $date1 = new DateTime($now);
-            $date2 = new DateTime($travel->created_at);
 
-            $difference = $date1->diff($date2);
-            $diffInMinutes = $difference->i;
+            $diffInMinutes = $this->diffrenceMinute($travel->created_at);
 
-            if($diffInMinutes >= 2){
-                $diffInMinutes -= 2;
-                $wait_price = $diffInMinutes * $tarif->every_waiting_price;
-
-                $travel->price = $travel->price + $wait_price;
+            if($diffInMinutes > 0){
+                $travel->price += ($diffInMinutes * $tarif->every_waiting_price);
                 $travel->time_of_waiting = $diffInMinutes;
+                $travel->minimum_price = $tarif->minimum_price;
+                $travel->minute_price = $tarif->every_minute_price;
+                $travel->km_price += $tarif->every_km_price;
+                $travel->waiting_price = $tarif->every_waiting_price;
+                $travel->minute_price_outside = $tarif->every_minute_price_outside;
+                $travel->km_price_outside = $tarif->every_km_price_outside;
 
                 $travel->update();
             }
@@ -171,11 +172,62 @@ class TravelController extends Controller
         
         $route->save();
         
+        $diffInMinutes = $this->diffrenceMinute($travel->created_at);
+
         $travel->km += $route->km;
-        $travel->price += ($travel->km*$tarif->every_km_price);
-        $travel->price += ($travel->km*$tarif->every_km_price);
+        $travel->price += ($route->km*$tarif->every_km_price);
+        $travel->minimum_price = $tarif->minimum_price;
+        $travel->minute_price = ($diffInMinutes * $tarif->every_minute_price);
+        $travel->km_price += ($travel->km*$tarif->every_km_price);
+        $travel->waiting_price = ($diffInMinutes * $tarif->every_waiting_price);
+        $travel->minute_price_outside = $tarif->every_minute_price_outside;
+        $travel->km_price_outside = $tarif->every_km_price_outside;
         
         $travel->update();
+    }
+
+    public function saveToRouteDBfinish($travel, $request, $tarif)
+    {
+        $travel = Travel::findOrFail($request->travel_id);
+        $tarif = Tarif::findOrFail($travel->tarif_id);
+
+        $route = new Route();
+        
+        $route->travel_id = $request->travel_id;
+        $route->user_id = $request->user()->id;
+        $route->lat = $request->lat_finish;
+        $route->lon = $request->lon_finish;
+        $route->km = $this->measureDistanceFinish($travel, $request);
+        $route->price += ($route->km*$tarif->every_km_price);
+        
+        $route->save();
+        
+        $diffInMinutes = $this->diffrenceMinute($travel->created_at);
+
+        $travel->km += $route->km;
+        $travel->price += ($route->km*$tarif->every_km_price);
+        $travel->minimum_price = $tarif->minimum_price;
+        $travel->minute_price = ($diffInMinutes * $tarif->every_minute_price);
+        $travel->km_price += ($travel->km*$tarif->every_km_price);
+        $travel->waiting_price = ($diffInMinutes * $tarif->every_waiting_price);
+        $travel->minute_price_outside = $tarif->every_minute_price_outside;
+        $travel->km_price_outside = $tarif->every_km_price_outside;
+        
+        $travel->update();
+    }
+
+    public function diffrenceMinute($created_at)
+    {
+        $now = Carbon::now()->toDateTimeString();
+
+        $date1 = new DateTime($now);
+        $date2 = new DateTime($created_at);
+
+        $difference = $date1->diff($date2);
+        $diffInMinutes = $difference->i - 2;
+
+        if($diffInMinutes > 0) return $diffInMinutes;
+        else return 0;
     }
     
     public function waitingMeasureDistance($travel_id, $route)
@@ -197,6 +249,19 @@ class TravelController extends Controller
     {
         $coordinate1 = new Coordinate($travel->lat, $travel->lon);
         $coordinate2 = new Coordinate($route->lat, $route->lon);
+
+        $calculator = new Vincenty();
+    
+        $metr = $calculator->getDistance($coordinate1, $coordinate2);
+        $kilometr = $this->metrToKilometr($metr);
+
+        return $kilometr;
+    }
+    
+    public function measureDistanceFinish($travel, $route)
+    {
+        $coordinate1 = new Coordinate($travel->lat, $travel->lon);
+        $coordinate2 = new Coordinate($route->lat_finish, $route->lon_finish);
 
         $calculator = new Vincenty();
     

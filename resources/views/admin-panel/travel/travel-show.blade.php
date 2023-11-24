@@ -171,21 +171,59 @@
                                             <div class="card card-custom card-stretch">
                                                 <div class="card-body p-0 rounded px-10 py-15 d-flex align-items-center justify-content-center"
                                                     style="background-color: #1BC5BD;">
-                                                    <img src="{{ asset($travel->image) }}" class="mw-100 w-200px"
-                                                        style="transform: scale(1.6);">
+                                                    {{ $travel->user->username }}
                                                 </div>
                                             </div>
                                             <!--end::Image-->
                                         </div>
                                         <div class="col-xxl-7 pl-xxl-11">
                                             <h2 class="font-weight-bolder text-dark mb-7" style="font-size: 32px;">
-                                                {{ $travel->name }}</h2>
+                                                {{ $travel->user->last_name }}
+                                                {{ $travel->user->last_name }}
+                                            </h2>
 
                                             <h5>
-                                                <a href="{{ route('category.show', [ app()->getlocale(), 'all', $travel->category_id ] ) }}"
-                                                    class="text-primary">
-                                                    {{ $travel->category->{ 'name_' . app()->getlocale() } }}
-                                                </a>
+                                                {{ $travel->user->car_model }}
+                                            </h5>
+                                            <h5>
+                                                {{ $travel->user->car_number }}
+                                            </h5>
+
+                                            <h5>
+                                                <span class="badge badge-{{ $travel->status == 'go' ? 'success' : 'warning' }}">
+                                                    {{ $travel->status }}
+                                                </span>
+                                            </h5>
+                                            
+                                            <h5>
+                                                <span class="badge badge-warning">
+                                                    {{ $travel->user->start_working }}
+                                                </span>
+                                            </h5>
+
+                                            <h5>
+                                                <span class="badge badge-primary">
+                                                    {{ $travel->user->birthday  }}
+                                                </span>
+                                            </h5>
+
+                                            <hr>
+
+                                            <span class="badge badge-warning">
+                                                travel start: {{ $travel->created_at }}
+                                            </span>
+                                            @if($travel->time_of_waiting)
+                                            <span class="badge badge-secondary">
+                                                {{ $travel->time_of_waiting }} min
+                                            </span>
+                                            @endif
+
+                                            <h5>
+                                                <a href="http://www.google.com/maps/place/{{ $travel->lat }}, {{ $travel->lon }}/{{ '@' . $travel->lat }}, {{ $travel->lon }},17z/data=!3m1!1e3" target="_blank">start: {{ $travel->lat }}, {{ $travel->lon }}</a>    
+                                                @if($travel->lat_finish && $travel->lon_finish)
+                                                <hr>
+                                                <a href="http://www.google.com/maps/place/{{ $travel->lat_finish }}, {{ $travel->lon_finish }}/{{ '@' . $travel->lat_finish }}, {{ $travel->lon_finish }},17z/data=!3m1!1e3" target="_blank">finish: {{ $travel->lat_finish }}, {{ $travel->lon_finish }}</a>    
+                                                @endif
                                             </h5>
 
                                         </div>
@@ -193,36 +231,52 @@
                                     <div class="row mb-6">
                                         <!--begin::Info-->
                                         <div class="col m-5">
-                                            <div class="image-input image-input-outline" id="kt_image_1"
-                                                data-images-count=""
-                                                style="background-image: url();">
-                                                <div class="image-input-wrapper"
-                                                    style="background-image: url({{ asset($travel->image) }})">
-                                                </div>
-
-                                                <label
-                                                    class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                    data-action="change" data-toggle="tooltip" title=""
-                                                    data-original-title="Change avatar">
-                                                    <i class="fa fa-pen icon-sm text-muted"></i>
-                                                    <input type="file" name="profile_avatar"
-                                                        accept=".png, .jpg, .jpeg" />
-
-                                                    <input type="hidden" name="profile_avatar_remove" />
-                                                </label>
-
-                                                <span
-                                                    class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                    data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
-                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                </span>
-
-                                                <span
-                                                    class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                                    data-action="remove" data-toggle="tooltip" title="Remove avatar">
-                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                </span>
+                                            <div id="datatable">
+                                                <table class="table table-separate table-head-custom table-checkable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>{{ __('First Name') }} {{ __('Last Name') }}</th>
+                                                            <th>{{ __('Car Number') }}</th>
+                                                            <th>{{ __('Car Model') }}</th>
+                                                            <th>{{ __('Price') }}</th>
+                                                            <th>{{ __('Km') }}</th>
+                                                            <th>{{ __('Status') }}</th>
+                                                            <th>{{ __('Time') }}</th>
+                                                            <th>{{ __('Latitude and Longitude') }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($travel->routes as $route)
+                                                        <tr id="datatable">
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $route->user->first_name  }} {{ $route->user->last_name  }}</td>
+                                                            <td>
+                                                                <img src="{{ asset('metronic-template/v8/assets/media/flags/turkmenistan.svg') }}" alt="{{ asset('metronic-template/v8/assets/media/flags/turkmenistan.svg') }}" width="20px" >
+                                                                <span class="car__number">{{ $route->user->car_number  }}</span>
+                                                            </td>
+                                                            <td>{{ $route->user->car_model  }}</td>
+                                                            <td>{{ $route->price  }} TMT</td>
+                                                            <td>{{ $route->km  }} km</td>
+                                                            <td>
+                                                                <span class="badge badge-{{ $route->travel->status == 'go' ? 'success' : 'warning' }}">
+                                                                    {{ $route->travel->status }}
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge badge-warning">
+                                                                    {{ $route->created_at }}
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="http://www.google.com/maps/place/{{ $route->lat }}, {{ $route->lon }}/{{ '@' . $route->lat }}, {{ $route->lon }},17z/data=!3m1!1e3" target="_blank">{{ $route->lat }}, {{ $route->lon }}</a>    
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>                             
                                             </div>
+
                                         </div>
                                         <!--end::Info-->
                                     </div>

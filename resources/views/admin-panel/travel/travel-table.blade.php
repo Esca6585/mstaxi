@@ -38,7 +38,7 @@
                     @if($travel->time_of_waiting)
                     <hr>
                     <span class="badge badge-secondary">
-                        {{ $travel->time_of_waiting }}
+                        {{ $travel->time_of_waiting }} min
                     </span>
                     @endif
                 </td>

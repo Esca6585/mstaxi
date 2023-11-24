@@ -28,7 +28,8 @@ return new class extends Migration
             $table->string('lat_finish')->nullable();
             $table->string('lon_finish')->nullable();
             
-            $table->string('time_of_waiting')->nullable();
+            $table->string('time_of_waiting')->default(0);
+            $table->string('time_of_full')->default(0);
 
             $table->float('minimum_price')->nullable();
             $table->float('minute_price')->nullable();

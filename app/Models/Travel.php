@@ -21,6 +21,7 @@ class Travel extends Model
         'lat_finish',
         'lon_finish',
         'time_of_waiting',
+        'time_of_full',
         'minimum_price',
         'minute_price',
         'km_price',
