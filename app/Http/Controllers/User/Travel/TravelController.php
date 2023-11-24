@@ -93,7 +93,7 @@ class TravelController extends Controller
         $night = $this->dayOrNight();
 
         if($travel->status == 'waiting'){
-            $metr = $this->waitingMeasureDistance($request->travel_id, $request);
+            $kilometr = $this->waitingMeasureDistance($request->travel_id, $request);
 
             $diffInMinutes = $this->diffrenceMinute($travel->created_at);
 
@@ -110,14 +110,14 @@ class TravelController extends Controller
                 $travel->update();
             }
 
-            if($metr > 0.1){
+            if($kilometr > 0.1){
                 $travel->status = 'go';
                 $travel->update();
 
                 $this->saveToRouteDB($travel, $request, $tarif);
     
                 return response()->json([
-                    'metr' => $metr,
+                    'kilometr' => $kilometr,
                     'travel_id' => $request->travel_id,
                     'night' => $night,
                     'tarif_id' => $request->tarif_id,
@@ -128,7 +128,7 @@ class TravelController extends Controller
                 ]);
             } else {
                 return response()->json([
-                    'metr' => $metr,
+                    'kilometr' => $kilometr,
                     'travel_id' => $request->travel_id,
                     'night' => $night,
                     'tarif_id' => $request->tarif_id,
@@ -144,10 +144,10 @@ class TravelController extends Controller
 
             $this->saveToRouteDB($lastRoute, $request, $tarif);
 
-            $metr = $this->waitingMeasureDistance($request->travel_id, $request);
+            $kilometr = $this->waitingMeasureDistance($request->travel_id, $request);
 
             return response()->json([
-                'metr' => $metr,
+                'kilometr' => $kilometr,
                 'lastRoute' => $lastRoute,
                 'travel_id' => $request->travel_id,
                 'night' => $night,
