@@ -50,9 +50,7 @@ class TravelController extends Controller
 
         return response()->json([
             'status' => $travel->status,
-            'travel_id' => $travel->id,
             'night' => $night,
-            'tarif_id' => $request->tarif_id,
             'tarif' => $tarif,
             'travel' => $travel,
         ]);

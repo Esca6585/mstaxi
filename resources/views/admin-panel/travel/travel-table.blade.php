@@ -24,8 +24,16 @@
                     <span class="car__number">{{ $travel->user->car_number  }}</span>
                 </td>
                 <td>{{ $travel->user->car_model  }}</td>
-                <td>{{ $travel->price  }} TMT</td>
-                <td>{{ $travel->km  }} km</td>
+                <td>
+                    <span class="badge badge-success">
+                        {{ $travel->price  }} TMT
+                    </span>
+                </td>
+                <td>
+                    <span class="badge badge-primary">
+                        {{ $travel->km  }} km
+                    </span>
+                </td>
                 <td>
                     <span class="@if($travel->status == 'go') badge badge-success @elseif($travel->status == 'waiting') badge badge-warning @else badge badge-primary @endif">
                         {{ $travel->status }}

@@ -233,6 +233,17 @@
                                                 @endif
                                             </h5>
 
+                                            <h5>
+                                                <span class="badge badge-success">
+                                                    {{ $travel->price  }} TMT
+                                                </span>
+                                            </h5>
+                                            <h5>
+                                                <span class="badge badge-primary">
+                                                    {{ $travel->km  }} km
+                                                </span>
+                                            </h5>
+
                                         </div>
                                     </div>
 
