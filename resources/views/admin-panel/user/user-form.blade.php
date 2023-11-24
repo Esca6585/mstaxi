@@ -400,9 +400,9 @@
                                                                 class="form-control @error('status') is-invalid @enderror"
                                                                 name="status"
                                                                 placeholder="{{ __('Status') }}"
-                                                                value="{{ $user->status }}{{ request()->segment(count(request()->segments())) == 'create' ? old('status') : '' }}" >
-                                                                <option value="1">{{ __('active') }}</option>
-                                                                <option value="0">{{ __('inactive') }}</option>
+                                                                value="{{ request()->segment(count(request()->segments())) == 'create' ? old('status') : '' }}" >
+                                                                <option value="1" {{ ($user->status == 1) ? 'selected' : '' }} >{{ __('active') }}</option>
+                                                                <option value="0" {{ ($user->status == 0) ? 'selected' : '' }}>{{ __('inactive') }}</option>
                                                             </select>
 
                                                             @error('status')
