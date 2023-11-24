@@ -51,7 +51,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Invalid login details'], 401);
         }
 
-        $user = User::where('username', $request['username'])->firstOrFail();
+        $user = User::where('username', $request['username'])->where('status', 1)->firstOrFail();
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
