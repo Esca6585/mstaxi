@@ -119,23 +119,17 @@ class TravelController extends Controller
                 return response()->json([
                     'status' => $travel->status,
                     'kilometr' => $kilometr,
-                    'travel_id' => $request->travel_id,
                     'night' => $night,
-                    'tarif_id' => $request->tarif_id,
                     'tarif' => $tarif,
                     'travel' => $travel,
-                    'diffInMinutes' => $diffInMinutes,
                 ]);
             } else {
                 return response()->json([
                     'status' => $travel->status,
                     'kilometr' => $kilometr,
-                    'travel_id' => $request->travel_id,
                     'night' => $night,
-                    'tarif_id' => $request->tarif_id,
                     'tarif' => $tarif,
                     'travel' => $travel,
-                    'diffInMinutes' => $diffInMinutes,
                 ]);
             }
         } else if($travel->status == 'go') {
@@ -150,13 +144,9 @@ class TravelController extends Controller
                 'status' => $travel->status,
                 'kilometr' => $kilometr,
                 'lastRoute' => $lastRoute,
-                'travel_id' => $request->travel_id,
                 'night' => $night,
-                'tarif_id' => $request->tarif_id,
                 'tarif' => $tarif,
-                'travel' => $travel,
-                'request->lat' => $request->lat,
-                'request->lon' => $request->lon,
+                'travel' => $travel
             ]);
         }
     }
