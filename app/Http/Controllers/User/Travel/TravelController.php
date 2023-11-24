@@ -144,7 +144,10 @@ class TravelController extends Controller
 
             $this->saveToRouteDB($lastRoute, $request, $tarif);
 
+            $metr = $this->waitingMeasureDistance($request->travel_id, $request);
+
             return response()->json([
+                'metr' => $metr,
                 'lastRoute' => $lastRoute,
                 'travel_id' => $request->travel_id,
                 'night' => $night,
