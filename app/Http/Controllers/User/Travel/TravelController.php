@@ -160,6 +160,8 @@ class TravelController extends Controller
     {
         $travel = Travel::findOrFail($request->travel_id);
         $tarif = Tarif::findOrFail($travel->tarif_id);
+        
+        $km = $this->measureDistance($travel, $request);
 
         $route = new Route();
         
@@ -167,18 +169,18 @@ class TravelController extends Controller
         $route->user_id = $request->user()->id;
         $route->lat = $request->lat;
         $route->lon = $request->lon;
-        $route->km = $this->measureDistance($travel, $request);
-        $route->price += ($route->km*$tarif->every_km_price);
+        $route->km = $km;
+        $route->price = ($km*$tarif->every_km_price);
         
         $route->save();
         
         $diffInMinutes = $this->diffrenceMinute($travel->created_at);
 
-        $travel->km += $route->km;
-        $travel->price += ($route->km*$tarif->every_km_price);
+        $travel->km += $km;
+        $travel->price += ($km*$tarif->every_km_price);
         $travel->minimum_price = $tarif->minimum_price;
         $travel->minute_price = ($diffInMinutes * $tarif->every_minute_price);
-        $travel->km_price += ($travel->km*$tarif->every_km_price);
+        $travel->km_price += ($km*$tarif->every_km_price);
         $travel->waiting_price = ($diffInMinutes * $tarif->every_waiting_price);
         $travel->minute_price_outside = $tarif->every_minute_price_outside;
         $travel->km_price_outside = $tarif->every_km_price_outside;
@@ -190,25 +192,27 @@ class TravelController extends Controller
     {
         $travel = Travel::findOrFail($request->travel_id);
         $tarif = Tarif::findOrFail($travel->tarif_id);
+        
+        $km = $this->measureDistanceFinish($travel, $request);
 
         $route = new Route();
         
         $route->travel_id = $request->travel_id;
         $route->user_id = $request->user()->id;
-        $route->lat = $request->lat_finish;
-        $route->lon = $request->lon_finish;
-        $route->km = $this->measureDistanceFinish($travel, $request);
-        $route->price += ($route->km*$tarif->every_km_price);
+        $route->lat = $request->lat;
+        $route->lon = $request->lon;
+        $route->km = $km;
+        $route->price = ($km*$tarif->every_km_price);
         
         $route->save();
         
         $diffInMinutes = $this->diffrenceMinute($travel->created_at);
 
-        $travel->km += $route->km;
-        $travel->price += ($route->km*$tarif->every_km_price);
+        $travel->km += $km;
+        $travel->price += ($km*$tarif->every_km_price);
         $travel->minimum_price = $tarif->minimum_price;
         $travel->minute_price = ($diffInMinutes * $tarif->every_minute_price);
-        $travel->km_price += ($travel->km*$tarif->every_km_price);
+        $travel->km_price += ($km*$tarif->every_km_price);
         $travel->waiting_price = ($diffInMinutes * $tarif->every_waiting_price);
         $travel->minute_price_outside = $tarif->every_minute_price_outside;
         $travel->km_price_outside = $tarif->every_km_price_outside;
