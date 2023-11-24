@@ -223,8 +223,8 @@ class TravelController extends Controller
         
         $route->travel_id = $request->travel_id;
         $route->user_id = $request->user()->id;
-        $route->lat = $request->lat;
-        $route->lon = $request->lon;
+        $route->lat = $request->lat_finish;
+        $route->lon = $request->lon_finish;
         $route->km = $km;
         $route->price = ($km*$tarif->every_km_price);
         
