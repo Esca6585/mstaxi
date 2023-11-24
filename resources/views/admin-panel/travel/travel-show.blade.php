@@ -168,12 +168,19 @@
                                     <div class="row mb-17">
                                         <div class="col-xxl-5 mb-11 mb-xxl-0">
                                             <!--begin::Image-->
-                                            <div class="card card-custom card-stretch">
-                                                <div class="card-body p-0 rounded px-10 py-15 d-flex align-items-center justify-content-center"
+                                            <div class="card-body p-0 rounded px-10 py-15 d-flex align-items-center justify-content-center"
                                                     style="background-color: #1BC5BD;">
-                                                    {{ $travel->user->username }}
+                                                    <img src="{{ asset('metronic-template/v7/assets/media/svg/avatars/009-boy-4.svg') }}" alt="{{ asset('metronic-template/v7/assets/media/svg/avatars/009-boy-4.svg') }}" width="50px" >
+                                                    <h2>
+                                                        {{ $travel->user->first_name }}
+                                                        {{ $travel->user->last_name }}
+                                                    </h2>
+                                                    <h3>
+                                                        <span class="badge badge-{{ $travel->user->status ? 'success' : 'danger' }}">
+                                                            {{ $travel->user->status ? __('active') : __('inactive') }}
+                                                        </span>
+                                                    </h3>
                                                 </div>
-                                            </div>
                                             <!--end::Image-->
                                         </div>
                                         <div class="col-xxl-7 pl-xxl-11">
@@ -214,7 +221,7 @@
                                             </span>
                                             @if($travel->time_of_waiting)
                                             <span class="badge badge-secondary">
-                                                {{ $travel->time_of_waiting }} min
+                                                {{ $travel->time_of_waiting }} min = {{ $travel->time_of_waiting*$travel->tarif->every_waiting_price }} TMT
                                             </span>
                                             @endif
 
@@ -228,17 +235,18 @@
 
                                         </div>
                                     </div>
+
+                                    <hr>
+                                    <h2 class="d-flex justify-content-center">{{ __('Routes') }}</h2>
+
                                     <div class="row mb-6">
-                                        <!--begin::Info-->
+                                        <!--begin::Routes-->
                                         <div class="col m-5">
                                             <div id="datatable">
                                                 <table class="table table-separate table-head-custom table-checkable">
                                                     <thead>
                                                         <tr>
                                                             <th>ID</th>
-                                                            <th>{{ __('First Name') }} {{ __('Last Name') }}</th>
-                                                            <th>{{ __('Car Number') }}</th>
-                                                            <th>{{ __('Car Model') }}</th>
                                                             <th>{{ __('Price') }}</th>
                                                             <th>{{ __('Km') }}</th>
                                                             <th>{{ __('Status') }}</th>
@@ -250,12 +258,6 @@
                                                         @foreach ($travel->routes as $route)
                                                         <tr id="datatable">
                                                             <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $route->user->first_name  }} {{ $route->user->last_name  }}</td>
-                                                            <td>
-                                                                <img src="{{ asset('metronic-template/v8/assets/media/flags/turkmenistan.svg') }}" alt="{{ asset('metronic-template/v8/assets/media/flags/turkmenistan.svg') }}" width="20px" >
-                                                                <span class="car__number">{{ $route->user->car_number  }}</span>
-                                                            </td>
-                                                            <td>{{ $route->user->car_model  }}</td>
                                                             <td>{{ $route->price  }} TMT</td>
                                                             <td>{{ $route->km  }} km</td>
                                                             <td>
@@ -278,7 +280,86 @@
                                             </div>
 
                                         </div>
-                                        <!--end::Info-->
+                                        <!--end::Routes-->
+                                    </div>
+                                    
+                                    <hr>
+
+                                    <h2 class="d-flex justify-content-center">{{ __('Tarif') }}</h2>
+
+                                    <div class="row mb-6">
+                                        <!--begin::Tarif-->
+                                        <div class="col m-5">
+                                            <div id="datatable">
+                                                <table class="table table-separate table-head-custom table-checkable">
+                                                    <thead>
+                                                        <tr>
+                                                            @foreach (Config::get('languages') as $lang => $language)
+                                                            <th>{{ __('Name') }} ({{ $language['name'] }})</th>
+                                                            @endforeach
+                                                            <th>{{ __('Img') }}</th>
+                                                            <th>{{ __('minimum price') }}</th>
+                                                            <th>{{ __('every minute price') }}</th>
+                                                            <th>{{ __('every km price') }}</th>
+                                                            <th>{{ __('every waiting price') }}</th>
+                                                            <th>{{ __('every minute price outside') }}</th>
+                                                            <th>{{ __('every km price outside') }}</th>
+                                                            <th>{{ __('additional tarif') }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr id="datatable">
+                                                            <td>{{ $travel->tarif->name_tm }}</td>
+                                                            <td>{{ $travel->tarif->name_ru }}</td>
+                                                            <td><img src="{{ asset($travel->tarif->image) }}" alt="{{ $travel->tarif->image }}" width="50px"></td>
+                                                            <td>
+                                                                <span class="badge badge-warning">
+                                                                    {{ $travel->tarif->minimum_price }} TMT
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge badge-primary">
+                                                                    {{ $travel->tarif->every_minute_price }} TMT
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge badge-primary">
+                                                                    {{ $travel->tarif->every_km_price }} TMT
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge badge-success">
+                                                                    {{ $travel->tarif->every_waiting_price }} TMT
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge badge-danger">
+                                                                    {{ $travel->tarif->every_minute_price_outside }} TMT
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge badge-danger">
+                                                                    {{ $travel->tarif->every_km_price_outside }} TMT
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                @if($travel->tarif->additional_tarif)
+                                                                <span class="badge badge-secondary">
+                                                                    {{ __('additional tarif') }}
+                                                                </span>
+                                                                @else
+                                                                <span class="badge badge-warning">
+                                                                    {{ __('not additional tarif') }}
+                                                                </span>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>                               
+                                            </div>
+
+                                        </div>
+                                        <!--end::Tarif-->
                                     </div>
 
                                 </div>

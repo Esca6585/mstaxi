@@ -49,12 +49,12 @@ class TravelController extends Controller
         $night = $this->dayOrNight();
 
         return response()->json([
+            'status' => $travel->status,
             'travel_id' => $travel->id,
             'night' => $night,
             'tarif_id' => $request->tarif_id,
             'tarif' => $tarif,
             'travel' => $travel,
-            'status' => $travel->status,
         ]);
     }
 
@@ -76,12 +76,12 @@ class TravelController extends Controller
         $night = $this->dayOrNight();
 
         return response()->json([
+            'status' => $travel->status,
             'travel_id' => $travel->id,
             'night' => $night,
             'tarif_id' => $request->tarif_id,
             'tarif' => $tarif,
             'travel' => $travel,
-            'status' => $travel->status,
         ]);
     }
 
@@ -114,27 +114,27 @@ class TravelController extends Controller
                 $travel->status = 'go';
                 $travel->update();
 
-                $this->saveToRouteDB($travel, $request, $tarif);
+                $this->saveToRouteDBwaiting($travel, $request, $tarif);
     
                 return response()->json([
+                    'status' => $travel->status,
                     'kilometr' => $kilometr,
                     'travel_id' => $request->travel_id,
                     'night' => $night,
                     'tarif_id' => $request->tarif_id,
                     'tarif' => $tarif,
                     'travel' => $travel,
-                    'status' => $travel->status,
                     'diffInMinutes' => $diffInMinutes,
                 ]);
             } else {
                 return response()->json([
+                    'status' => $travel->status,
                     'kilometr' => $kilometr,
                     'travel_id' => $request->travel_id,
                     'night' => $night,
                     'tarif_id' => $request->tarif_id,
                     'tarif' => $tarif,
                     'travel' => $travel,
-                    'status' => $travel->status,
                     'diffInMinutes' => $diffInMinutes,
                 ]);
             }
@@ -142,11 +142,12 @@ class TravelController extends Controller
             
             $lastRoute = Route::latest('created_at')->where('travel_id', $travel->id)->where('user_id', $request->user()->id)->first();
 
-            $this->saveToRouteDB($lastRoute, $request, $tarif);
+            $this->saveToRouteDBgo($lastRoute, $request, $tarif);
 
             $kilometr = $this->waitingMeasureDistance($request->travel_id, $request);
 
             return response()->json([
+                'status' => $travel->status,
                 'kilometr' => $kilometr,
                 'lastRoute' => $lastRoute,
                 'travel_id' => $request->travel_id,
@@ -154,12 +155,13 @@ class TravelController extends Controller
                 'tarif_id' => $request->tarif_id,
                 'tarif' => $tarif,
                 'travel' => $travel,
-                'status' => $travel->status,
+                'request->lat' => $request->lat,
+                'request->lon' => $request->lon,
             ]);
         }
     }
 
-    public function saveToRouteDB($travel, $request, $tarif)
+    public function saveToRouteDBwaiting($travel, $request, $tarif)
     {
         $travel = Travel::findOrFail($request->travel_id);
         $tarif = Tarif::findOrFail($travel->tarif_id);
@@ -178,6 +180,37 @@ class TravelController extends Controller
         $route->save();
         
         $diffInMinutes = $this->diffrenceMinute($travel->created_at);
+
+        $travel->km += $km;
+        $travel->price += ($km*$tarif->every_km_price);
+        $travel->minimum_price = $tarif->minimum_price;
+        $travel->minute_price = ($diffInMinutes * $tarif->every_minute_price);
+        $travel->km_price += ($km*$tarif->every_km_price);
+        $travel->waiting_price = ($diffInMinutes * $tarif->every_waiting_price);
+        $travel->minute_price_outside = $tarif->every_minute_price_outside;
+        $travel->km_price_outside = $tarif->every_km_price_outside;
+        
+        $travel->update();
+    }
+
+    public function saveToRouteDBgo($lastRoute, $request, $tarif)
+    {   
+        $travel = Travel::findOrFail($request->travel_id);
+        
+        $km = $this->measureDistance($lastRoute, $request);
+
+        $route = new Route();
+        
+        $route->travel_id = $request->travel_id;
+        $route->user_id = $request->user()->id;
+        $route->lat = $request->lat;
+        $route->lon = $request->lon;
+        $route->km = $km;
+        $route->price = ($km*$tarif->every_km_price);
+        
+        $route->save();
+        
+        $diffInMinutes = $this->diffrenceMinute($lastRoute->created_at);
 
         $travel->km += $km;
         $travel->price += ($km*$tarif->every_km_price);
