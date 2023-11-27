@@ -244,6 +244,18 @@ class TravelController extends Controller
         $travel->update();
     }
 
+    public function getStatistic(Request $request)
+    {
+        $travel= Travel::where('user_id', $request->user()->id)->orderBy('created_at', 'asc')->get()
+                        ->groupBy(function($val) {
+                            return Carbon::parse($val->created_at)->format('d-M-Y');
+                        });
+
+        return response()->json([
+            'travel' => $travel         
+        ]);
+    }
+
     public function diffrenceMinute($created_at)
     {
         $now = Carbon::now()->toDateTimeString();
