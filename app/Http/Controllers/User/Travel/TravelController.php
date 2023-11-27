@@ -94,7 +94,7 @@ class TravelController extends Controller
             $diffInMinutes = $this->diffrenceMinute($travel->created_at);
 
             if($diffInMinutes > 0){
-                $travel->price += ($diffInMinutes * $tarif->every_waiting_price);
+                $travel->price = ($diffInMinutes * $tarif->every_waiting_price);
                 $travel->time_of_waiting = $diffInMinutes;
                 $travel->minimum_price = $tarif->minimum_price;
                 $travel->minute_price = $tarif->every_minute_price;

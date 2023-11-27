@@ -53,6 +53,9 @@
         <label for="travel_id">travel_id</label>
         <input type="text" id="travel_id" class="w-25 m-3" value="1">
         
+
+        <button class="btn btn-success w-25 m-3" onclick="routeSave()">route-save</button>
+
     </div>
 
     
