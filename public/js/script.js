@@ -80,9 +80,9 @@ function start() {
         data: data,
         success: function (res) {
             console.log(res);
-            $("#success").html('travel_id = ' + res.travel_id);
-            console.log(res.travel_id);
-            $("#travel_id").val(res.travel_id);
+            $("#success").html('travel_id = ' + res.travel.id);
+            console.log(res.travel.id);
+            $("#travel_id").val(res.travel.id);
             console.log(path);
         },
         error: function(err) {
@@ -300,3 +300,37 @@ const coordinates = [
     38.00209353862267, 58.41461777687073,
     38.00213158249855, 58.41477334499359,
 ];
+
+
+function routeSave()
+{
+    var path = window.location.origin;
+    const token = document.getElementById("token").value;
+    const tarif_id = document.getElementById("tarif_id").value;
+    
+    console.log("token:" + token);
+
+    for (let i = 0; i < coordinates.length; i+=2) {
+        var data = 'lat=' + coordinates[i] + '&lon=' + coordinates[i+1] + '&tarif_id=' + tarif_id;
+        
+        console.log(data);
+
+        $.ajax({
+            headers: {
+                Authorization: 'Bearer ' + token
+            },
+            url: path + '/api/route-save',
+            type: 'POST',
+            data: data,
+            success: function (res) {
+                console.log(res);
+                $("#success").html('travel_id = ' + res.travel.id);
+                console.log(res.travel.id);
+                $("#travel_id").val(res.travel.id);
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    };
+}

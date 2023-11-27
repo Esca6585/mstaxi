@@ -132,9 +132,11 @@ class TravelController extends Controller
             
             $lastRoute = Route::latest('created_at')->where('travel_id', $travel->id)->where('user_id', $request->user()->id)->first();
 
-            $this->saveToRouteDBgo($lastRoute, $request, $tarif);
+            $kilometr = $this->measureDistance($lastRoute, $request);
 
-            $kilometr = $this->waitingMeasureDistance($request->travel_id, $request);
+            if($kilometr > 0){
+                $this->saveToRouteDBgo($lastRoute, $request, $tarif);
+            }
 
             return response()->json([
                 'status' => $travel->status,
