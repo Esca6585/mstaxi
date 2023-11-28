@@ -246,13 +246,11 @@ class TravelController extends Controller
 
     public function getStatistic(Request $request)
     {
-        $travel= Travel::where('user_id', $request->user()->id)->orderBy('created_at', 'asc')->get()
-                        ->groupBy(function($val) {
-                            return Carbon::parse($val->created_at)->format('d-M-Y');
-                        });
-
+        $travels = Travel::where('user_id', $request->user()->id)->get();
+        $statistic = $travels->groupBy(function ($travel) { return $travel->created_at->format('d-m-Y'); });
+ 
         return response()->json([
-            'travel' => $travel         
+            'statistic' => $statistic,
         ]);
     }
 

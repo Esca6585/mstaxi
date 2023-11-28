@@ -17,7 +17,7 @@ Route::get('/distance', function(){
     return view('distance');
 });
 
-Route::redirect('/', config('app.locale'));
+Route::view('/', 'welcome');
 
 Route::get('/login', function(){
     return redirect()->route('admin.login', app()->getlocale());

@@ -26,6 +26,8 @@ Route::get('/tarifs', [App\Http\Controllers\User\Travel\TravelController::class,
 
 Route::get('/get-statistic', [App\Http\Controllers\User\Travel\TravelController::class, 'getStatistic'])->middleware('auth:sanctum');
 
+Route::get('/get-statistic', [App\Http\Controllers\User\Travel\TravelController::class, 'getStatistic'])->middleware('auth:sanctum');
+
 Route::get('/day-or-night', [App\Http\Controllers\User\Travel\TravelController::class, 'dayOrNight'])->middleware('auth:sanctum');
 
 Route::post('/measure-two-distance', [App\Http\Controllers\User\Travel\TravelController::class, 'measureTwoDistance'])->middleware('auth:sanctum');
@@ -37,8 +39,6 @@ Route::post('/travel-finish', [App\Http\Controllers\User\Travel\TravelController
 Route::post('/route-save', [App\Http\Controllers\User\Travel\TravelController::class, 'routeSave'])->middleware('auth:sanctum');
 
 // Admin Login API
-
-Route::post('/admin/register', [App\Http\Controllers\Admin\Auth\AuthController::class, 'register']);
 
 Route::post('/admin/login', [App\Http\Controllers\Admin\Auth\AuthController::class, 'login']);
 
