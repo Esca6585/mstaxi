@@ -7,7 +7,7 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserUpdateRequest;
+use App\Http\RequestsUUserUpdateRequest;
 use Image;
 use Str;
 use Hash;
@@ -54,7 +54,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($lang, user $user)
+    public function create($lang, User $user)
     {
         return view('admin-panel.user.user-form', compact('user'));
     }
@@ -65,7 +65,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(userCreateRequest $request)
+    public function store(UserCreateRequest $request)
     {
         $user = new User;
         
@@ -87,10 +87,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\user $user
+     * @param  \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function show($lang, user $user)
+    public function show($lang, User $user)
     {
         return view('admin-panel.user.user-show', compact('user'));
     }
@@ -101,7 +101,7 @@ class UserController extends Controller
      * @param  \App\Models\user  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($lang, user $user)
+    public function edit($lang, User $user)
     {
         return view('admin-panel.user.user-form', compact('user'));
     }
@@ -113,7 +113,7 @@ class UserController extends Controller
      * @param  \App\Models\user  $user
      * @return \Illuminate\Http\Response
      */
-    public function update($lang, userUpdateRequest $request, user $user)
+    public function update($lang, UserUpdateRequest $request, User $user)
     {
         if($request->password != null){
             $this->validate($request, [
@@ -151,7 +151,7 @@ class UserController extends Controller
      * @param  \App\Models\user  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($lang, user $user)
+    public function destroy($lang, User $user)
     {
         $user->delete();
     

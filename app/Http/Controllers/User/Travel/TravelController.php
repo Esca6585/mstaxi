@@ -246,7 +246,11 @@ class TravelController extends Controller
 
     public function getStatistic(Request $request)
     {
-        $travels = Travel::where('user_id', $request->user()->id)->get();
+        if($request->user_id){
+            $travels = Travel::where('user_id', $request->user_id)->get();
+        } else {
+            $travels = Travel::where('user_id', $request->user()->id)->get();
+        }
         $statistic = $travels->groupBy(function ($travel) { return $travel->created_at->format('d-m-Y'); });
  
         return response()->json([
