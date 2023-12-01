@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
+Route::get('/', function(){
+    return view('dist.index');
+});
+
 Route::get('/distance', function(){
     return view('distance');
 });
-
-Route::view('/', 'welcome');
 
 Route::get('/login', function(){
     return redirect()->route('admin.login', app()->getlocale());
