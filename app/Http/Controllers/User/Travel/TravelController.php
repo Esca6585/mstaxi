@@ -149,6 +149,25 @@ class TravelController extends Controller
         }
     }
 
+    public function coordinateSave(Request $request)
+    {
+        foreach($request->data as $row){
+            $route = new Route;
+            
+            $route->user_id = $request->user()->id;
+            $route->travel_id = $row['travel_id'];
+            $route->lat = $row['latitude'];
+            $route->lon = $row['langitude'];
+
+            $route->save();
+        }
+
+        return response()->json([
+            'status' => "success",
+        ]);
+    }
+
+
     public function saveToRouteDBwaiting($travel, $request, $tarif)
     {
         $travel = Travel::findOrFail($request->travel_id);

@@ -258,9 +258,6 @@
                                                     <thead>
                                                         <tr>
                                                             <th>ID</th>
-                                                            <th>{{ __('Price') }}</th>
-                                                            <th>{{ __('Km') }}</th>
-                                                            <th>{{ __('Status') }}</th>
                                                             <th>{{ __('Time') }}</th>
                                                             <th>{{ __('Latitude and Longitude') }}</th>
                                                         </tr>
@@ -269,13 +266,6 @@
                                                         @foreach ($travel->routes as $route)
                                                         <tr id="datatable">
                                                             <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $route->price  }} TMT</td>
-                                                            <td>{{ $route->km  }} km</td>
-                                                            <td>
-                                                                <span class="badge badge-{{ $route->travel->status == 'go' ? 'success' : 'warning' }}">
-                                                                    {{ $route->travel->status }}
-                                                                </span>
-                                                            </td>
                                                             <td>
                                                                 <span class="badge badge-warning">
                                                                     {{ $route->created_at }}

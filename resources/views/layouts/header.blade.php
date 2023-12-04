@@ -37,6 +37,13 @@
                         </a>
                     </li>
 
+                    <li class="menu-item {{ Request::is('*/admin/travel*') ? 'menu-item-active' : '' }}">
+                        <a href="{{ route('travel.index', app()->getlocale() ) }}" class="menu-link">
+                            <span class="menu-text">{{ __('Travels') }}</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                    </li>
+
                 </ul>
                 <!--end::Header Nav-->
             </div>

@@ -36,6 +36,8 @@ Route::post('/travel-finish', [App\Http\Controllers\User\Travel\TravelController
 
 Route::post('/route-save', [App\Http\Controllers\User\Travel\TravelController::class, 'routeSave'])->middleware('auth:sanctum');
 
+Route::post('/coordinate-save', [App\Http\Controllers\User\Travel\TravelController::class, 'coordinateSave'])->middleware('auth:sanctum');
+
 // Admin Login API
 
 Route::post('/admin/login', [App\Http\Controllers\Admin\Auth\AuthController::class, 'login']);

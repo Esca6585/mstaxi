@@ -88,16 +88,6 @@
                 </a>
             </li>
             <!--end::Travel-->
-            <!--begin::Route-->
-            <li class="menu-item {{ Request::is('*/admin/route*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                <a href="{{ route('route.index', app()->getlocale() ) }}" class="menu-link">
-                    <span class="svg-icon menu-icon">
-                        <img src="{{ asset('metronic-template/v7/assets/media/icons/duotone/Interface/Map-Marker.svg') }}" alt="{{ asset('metronic-template/v7/assets/media/icons/duotone/Interface/Map-Marker.svg') }}" width="20px" >
-                    </span>
-                    <span class="menu-text">{{ __('Routes') }}</span>
-                </a>
-            </li>
-            <!--end::Route-->
         </ul>
         <!--end::Menu Nav-->
     </div>

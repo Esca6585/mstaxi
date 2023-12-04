@@ -184,9 +184,6 @@
                                             <h5>
                                                 <a href="{{ route('travel.show', [ app()->getlocale(), $route->travel->id ] ) }}"
                                                     class="text-primary">
-                                                    {{ $route->travel->price  }} TMT
-                                                    
-                                                    {{ $route->travel->km  }} km
 
                                                     <span class="badge badge-{{ $route->travel->status == 'go' ? 'success' : 'warning' }}">
                                                         {{ $route->travel->status }}
