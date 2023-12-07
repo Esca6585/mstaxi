@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\DB;
 */
 
 Route::get('/', function(){
-    return view('dist.index');
-});
-
-Route::get('/distance', function(){
-    return view('distance');
+    return redirect('/tm');
 });
 
 Route::get('/login', function(){
