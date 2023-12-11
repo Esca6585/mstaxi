@@ -45,3 +45,7 @@ Route::post('/admin/logout', [App\Http\Controllers\Admin\Auth\AuthController::cl
 // Admin App API
 Route::get('/travels', [App\Http\Controllers\Admin\Api\AdminController::class, 'travels'])->middleware('auth:sanctum');
 Route::get('/users', [App\Http\Controllers\Admin\Api\AdminController::class, 'users'])->middleware('auth:sanctum');
+
+Route::post('/user-update', [App\Http\Controllers\Admin\Api\AdminController::class, 'userUpdate'])->middleware('auth:sanctum');
+Route::post('/user-block-unblock', [App\Http\Controllers\Admin\Api\AdminController::class, 'userBlockUnblock'])->middleware('auth:sanctum');
+Route::post('/user-delete', [App\Http\Controllers\Admin\Api\AdminController::class, 'userBlockUnblock'])->middleware('auth:sanctum');
