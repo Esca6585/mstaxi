@@ -31,12 +31,12 @@ return new class extends Migration
             $table->string('time_of_waiting')->default(0);
             $table->string('time_of_full')->default(0);
 
-            $table->float('minimum_price')->nullable();
-            $table->float('minute_price')->nullable();
-            $table->float('km_price')->nullable();
-            $table->float('waiting_price')->nullable();
-            $table->float('minute_price_outside')->nullable();
-            $table->float('km_price_outside')->nullable();
+            $table->integer('minimum_price')->nullable();
+            $table->integer('minute_price')->nullable();
+            $table->integer('km_price')->nullable();
+            $table->integer('waiting_price')->nullable();
+            $table->integer('minute_price_outside')->nullable();
+            $table->integer('km_price_outside')->nullable();
 
             $table->string('status')->nullable();
 

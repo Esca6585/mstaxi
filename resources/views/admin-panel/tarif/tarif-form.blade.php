@@ -301,6 +301,27 @@
 
                                                     <div class="col-4">
                                                         <div class="form-group">
+                                                            <label>{{ __('free waiting minute') }}</label>
+
+                                                            <input type="text"
+                                                                class="form-control @error('free_waiting_minute') is-invalid @enderror"
+                                                                name="free_waiting_minute"
+                                                                placeholder="{{ __('free waiting minute') }}"
+                                                                value="{{ $tarif->free_waiting_minute ?? '' }}{{ request()->segment(count(request()->segments())) == 'create' ? old('free_waiting_minute') : '' }}" />
+
+                                                            @error('free_waiting_minute')
+                                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                                <div data-field="free_waiting_minute" data-validator="notEmpty">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            </div>
+                                                            @enderror
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-4">
+                                                        <div class="form-group">
                                                             <label>{{ __('every minute price outside') }}</label>
 
                                                             <input type="text"

@@ -12,6 +12,7 @@ use App\Models\Travel;
 use App\Models\Tarif;
 use Carbon;
 use DateTime;
+use DB;
 
 class TravelController extends Controller
 {
@@ -58,6 +59,10 @@ class TravelController extends Controller
 
     public function travelFinish(Request $request)
     {
+        return response()->json([
+            '$request->all()' => $request->all(),
+        ]);
+        
         $travel = Travel::findOrFail($request->travel_id);
         $tarif = Tarif::findOrFail($travel->tarif_id);
         
@@ -266,14 +271,37 @@ class TravelController extends Controller
     public function getStatistic(Request $request)
     {
         if($request->user_id){
-            $travels = Travel::where('user_id', $request->user_id)->get();
+            $travels = Travel::select('*')->where('user_id', $request->user_id)
+            ->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->created_at)->format('Y');
+            });
+
+            $travels = $travels
+                ->map(function ($values) {
+                    return $values->groupBy(function ($val) {
+                        return Carbon::parse($val->created_at)->format('M');
+                    });
+                })
+                ->toArray();
         } else {
-            $travels = Travel::where('user_id', $request->user()->id)->get();
+            $travels = Travel::select('*')->where('user_id', $request->user()->id)
+            ->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->created_at)->format('Y');
+            });
+
+            $travels = $travels
+                ->map(function ($values) {
+                    return $values->groupBy(function ($val) {
+                        return Carbon::parse($val->created_at)->format('M');
+                    });
+                })
+                ->toArray();
         }
-        $statistic = $travels->groupBy(function ($travel) { return $travel->created_at->format('d-m-Y'); });
- 
+
         return response()->json([
-            'statistic' => $statistic,
+            'travels' => $travels,
         ]);
     }
 

@@ -11,6 +11,7 @@
                 <th>{{ __('every minute price') }}</th>
                 <th>{{ __('every km price') }}</th>
                 <th>{{ __('every waiting price') }}</th>
+                <th>{{ __('free waiting minute') }}</th>
                 <th>{{ __('every minute price outside') }}</th>
                 <th>{{ __('every km price outside') }}</th>
                 <th>{{ __('additional tarif') }}</th>
@@ -42,6 +43,11 @@
                 <td>
                     <span class="badge badge-success">
                         {{ $tarif->every_waiting_price }} TMT
+                    </span>
+                </td>
+                <td>
+                    <span class="badge badge-secondary">
+                        {{ $tarif->free_waiting_minute }} min
                     </span>
                 </td>
                 <td>

@@ -188,6 +188,7 @@
                                             <h5><b>{{ __('every minute price') }}: </b>{{ $tarif->every_minute_price }}</h5>
                                             <h5><b>{{ __('every km price') }}: </b>{{ $tarif->every_km_price }}</h5>
                                             <h5><b>{{ __('every waiting price') }}: </b>{{ $tarif->every_waiting_price }}</h5>
+                                            <h5><b>{{ __('free waiting minute') }}: </b>{{ $tarif->free_waiting_minute }}</h5>
                                             <h5><b>{{ __('every minute price outside') }}: </b>{{ $tarif->every_minute_price_outside }}</h5>
                                             <h5><b>{{ __('every km price outside') }}: </b>{{ $tarif->every_km_price_outside }}</h5>
 
