@@ -185,7 +185,7 @@
                                         </div>
                                         <div class="col-xxl-7 pl-xxl-11">
                                             <h2 class="font-weight-bolder text-dark mb-7" style="font-size: 32px;">
-                                                {{ $travel->user->last_name }}
+                                                {{ $travel->user->first_name }}
                                                 {{ $travel->user->last_name }}
                                             </h2>
 
