@@ -48,4 +48,4 @@ Route::get('/users', [App\Http\Controllers\Admin\Api\AdminController::class, 'us
 
 Route::post('/user-update', [App\Http\Controllers\Admin\Api\AdminController::class, 'userUpdate'])->middleware('auth:sanctum');
 Route::post('/user-block-unblock', [App\Http\Controllers\Admin\Api\AdminController::class, 'userBlockUnblock'])->middleware('auth:sanctum');
-Route::post('/user-delete', [App\Http\Controllers\Admin\Api\AdminController::class, 'userBlockUnblock'])->middleware('auth:sanctum');
+Route::post('/user-delete', [App\Http\Controllers\Admin\Api\AdminController::class, 'userDelete'])->middleware('auth:sanctum');

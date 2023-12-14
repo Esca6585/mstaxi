@@ -38,6 +38,8 @@ return new class extends Migration
             $table->integer('minute_price_outside')->nullable();
             $table->integer('km_price_outside')->nullable();
 
+            $table->json('tarifs')->nullable();
+
             $table->string('status')->nullable();
 
             $table->foreign('user_id')

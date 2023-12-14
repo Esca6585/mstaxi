@@ -59,19 +59,22 @@ class TravelController extends Controller
 
     public function travelFinish(Request $request)
     {
-        return response()->json([
-            '$request->all()' => $request->all(),
-        ]);
-        
         $travel = Travel::findOrFail($request->travel_id);
         $tarif = Tarif::findOrFail($travel->tarif_id);
         
-        $lastRoute = Route::latest('created_at')->where('travel_id', $travel->id)->where('user_id', $request->user()->id)->first();
-
-        $this->saveToRouteDBfinish($lastRoute, $request, $tarif);
-
         $travel->lat_finish = $request->lat_finish;
         $travel->lon_finish = $request->lon_finish;
+        $travel->tarifs = $request->tarifs;
+        $travel->km = $request->all_km;
+        $travel->price = $request->total_price;
+
+        $travel->minimum_price = $tarif->minimum_price;
+        $travel->minute_price = ($tarif->every_minute_price*$request->time);
+        $travel->km_price = ($request->all_km*$tarif->every_km_price);
+        $travel->waiting_price = ($tarif->every_waiting_price*$request->waiting_time);
+        $travel->minute_price_outside = $tarif->every_minute_price_outside;
+        $travel->km_price_outside = $tarif->every_km_price_outside;
+
         $travel->status = 'finished';
         
         $travel->update();
@@ -270,6 +273,8 @@ class TravelController extends Controller
 
     public function getStatistic(Request $request)
     {
+        $travels = Travel::get();
+        return response()->json($travels);
         if($request->user_id){
             $travels = Travel::select('*')->where('user_id', $request->user_id)
             ->get()

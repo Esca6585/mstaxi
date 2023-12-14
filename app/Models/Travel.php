@@ -11,6 +11,10 @@ class Travel extends Model
 
     protected $table = 'travels';
 
+    protected $casts = [
+        'tarifs' => 'array',
+    ];
+
     protected $fillable = [
         'user_id',
         'tarif_id',
@@ -28,45 +32,9 @@ class Travel extends Model
         'waiting_price',
         'minute_price_outside',
         'km_price_outside',
+        'tarifs',
         'status',
     ];
-
-    public function toSearchableArray()
-    {
-        return [
-            'price' => '',
-            'km' => '',
-            'lat' => '',
-            'lon' => '',
-            'lat_finish' => '',
-            'lon_finish' => '',
-            'time_of_waiting' => '',
-            'status' => '',
-            'user.first_name' => '',
-            'user.last_name' => '',
-            'user.car_number' => '',
-            'user.car_model' => '',
-            'user.birthday' => '',
-            'user.start_working' => '',
-            'user.username' => '',
-            'user.password' => '',
-            'user.status' => '',
-            'tarif.name_tm' => '',
-            'tarif.name_ru' => '',
-            'tarif.minimum_price' => '',
-            'tarif.every_minute_price' => '',
-            'tarif.every_km_price' => '',
-            'tarif.every_waiting_price' => '',
-            'tarif.every_minute_price_outside' => '',
-            'tarif.every_km_price_outside' => '',
-            'tarif.additional_tarif' => '',
-            'tarif.image' => '',
-            'route.price' => '',
-            'route.km' => '',
-            'route.lat' => '',
-            'route.lon' => '',
-        ];
-    }
 
     public function user()
     {

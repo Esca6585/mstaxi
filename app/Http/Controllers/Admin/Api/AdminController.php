@@ -40,7 +40,7 @@ class AdminController extends Controller
             'birthday' => 'required|date',
             'start_working' => 'required|date',
             'username' => 'required|string|max:255|unique:users',
-            'password' => 'required|string|min:8',
+            'password' => 'required|confirmed|min:8',
             'status' => 'required|boolean',
         ]);
 
@@ -87,7 +87,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function userDelete(User $user)
+    public function userDelete(Request $request)
     {
         $validatedData = $request->validate([
             'user_id' => 'required',
