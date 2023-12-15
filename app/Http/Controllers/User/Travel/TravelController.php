@@ -273,8 +273,6 @@ class TravelController extends Controller
 
     public function getStatistic(Request $request)
     {
-        $travels = Travel::get();
-        return response()->json($travels);
         if($request->user_id){
             $travels = Travel::select('*')->where('user_id', $request->user_id)
             ->get()
