@@ -273,39 +273,9 @@ class TravelController extends Controller
 
     public function getStatistic(Request $request)
     {
-        if($request->user_id){
-            $travels = Travel::select('*')->where('user_id', $request->user_id)
-            ->get()
-            ->groupBy(function ($val) {
-                return Carbon::parse($val->created_at)->format('Y');
-            });
-
-            $travels = $travels
-                ->map(function ($values) {
-                    return $values->groupBy(function ($val) {
-                        return Carbon::parse($val->created_at)->format('M');
-                    });
-                })
-                ->toArray();
-        } else {
-            $travels = Travel::select('*')->where('user_id', $request->user()->id)
-            ->get()
-            ->groupBy(function ($val) {
-                return Carbon::parse($val->created_at)->format('Y');
-            });
-
-            $travels = $travels
-                ->map(function ($values) {
-                    return $values->groupBy(function ($val) {
-                        return Carbon::parse($val->created_at)->format('M');
-                    });
-                })
-                ->toArray();
-        }
-
-        return response()->json([
-            'travels' => $travels,
-        ]);
+        return Travel::select('travels.*', 'tarifs.name_ru')
+            ->join('tarifs', 'travels.tarif_id', '=', 'tarifs.id')
+            ->get();
     }
 
     public function diffrenceMinute($created_at)
