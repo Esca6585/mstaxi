@@ -69,9 +69,9 @@ class TravelController extends Controller
         $travel->price = $request->total_price;
 
         $travel->minimum_price = $tarif->minimum_price;
-        $travel->minute_price = ($tarif->every_minute_price*$request->time);
-        $travel->km_price = ($request->all_km*$tarif->every_km_price);
-        $travel->waiting_price = ($tarif->every_waiting_price*$request->waiting_time);
+        $travel->minute_price = (int)($tarif->every_minute_price*$request->time);
+        $travel->km_price = (int)($request->all_km*$tarif->every_km_price);
+        $travel->waiting_price = (int)($tarif->every_waiting_price*$request->waiting_time);
         $travel->minute_price_outside = $tarif->every_minute_price_outside;
         $travel->km_price_outside = $tarif->every_km_price_outside;
 
