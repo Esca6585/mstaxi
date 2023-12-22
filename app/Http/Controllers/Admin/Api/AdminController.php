@@ -29,14 +29,12 @@ class AdminController extends Controller
         ]);
     }
 
-    //new
     public function user($id)
     {
         $user = User::findOrFail($id);
         return response()->json(['user' => $user]);
     }
 
-    //new 
     public function userCreate(Request $request)
     {
         $validatedData = $request->validate([
@@ -103,7 +101,6 @@ class AdminController extends Controller
         ]);
     }
 
-    //new
     public function userBlockUnblock($id)
     {
         $user = User::findOrFail($id);
@@ -117,8 +114,6 @@ class AdminController extends Controller
         ]);
     }
    
-
-    //new
     public function userDelete($id)
     {
         $user = User::findOrFail($id);
@@ -129,45 +124,4 @@ class AdminController extends Controller
             'success' => true,
         ]);
     }
-    
-    //LAST CODE IN ESEN 
-
-    // public function userDelete(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'user_id' => 'required',
-    //     ]);
-
-    //     $user = User::findOrFail($validatedData['user_id']);
-
-    //     $user->delete();
-
-    //     return response()->json([
-    //         'success' => 'user is deleted',
-    //     ]);
-    // }
-
-    // public function userBlockUnblock(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'user_id' => 'required',
-    //         'status' => 'required|boolean',
-    //     ]);
-
-    //     $user = User::findOrFail($validatedData['user_id']);
-
-    //     $user->status = $validatedData['status'];
-
-    //     $user->update();
-
-    //     if($user->status){
-    //         $message = 'user is activated';
-    //     } else {
-    //         $message = 'user is blocked';
-    //     }
-
-    //     return response()->json([
-    //         'success' => $message,
-    //     ]);
-    // }
 }
