@@ -11,6 +11,7 @@
                 <th>{{ __('Birthday') }}</th>
                 <th>{{ __('Start Working') }}</th>
                 <th>{{ __('Status') }}</th>
+                <th>{{ __('Online') }}</th>
                 <th>{{ __('Actions') }}</th>
             </tr>
         </thead>
@@ -39,6 +40,11 @@
                 <td>
                     <span class="badge badge-{{ $user->status ? 'success' : 'danger' }}">
                         {{ $user->status ? __('active') : __('inactive') }}
+                    </span>
+                </td>
+                <td>
+                    <span class="badge badge-{{ $user->online ? 'success' : 'danger' }}">
+                        {{ $user->online ? __('online') : __('offline') }}
                     </span>
                 </td>
                 <td>@include('admin-panel.user.user-action', [ $user ])</td>
