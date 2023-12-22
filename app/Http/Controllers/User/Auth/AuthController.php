@@ -35,6 +35,7 @@ class AuthController extends Controller
             'username' => $validatedData['username'],
             'password' => Hash::make($validatedData['password']),
             'status' => $validatedData['status'],
+            'online' => 1,
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -55,6 +56,8 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        $this->userOnline($user->id, 1);
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
@@ -63,6 +66,8 @@ class AuthController extends Controller
 
     public function logout()
     {
+        $this->userOnline(auth()->user()->id, 0);
+
         $tokenId = Str::before(request()->bearerToken(), '|');
         
         auth()->user()->tokens()->where('id', $tokenId )->delete();
@@ -75,5 +80,14 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         return $request->user();
+    }
+
+    public function userOnline($user_id, $online)
+    {
+        $user = User::findOrFail($user_id);
+
+        $user->online = $online;
+
+        $user->update();
     }
 }

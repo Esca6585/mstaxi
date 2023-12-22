@@ -273,7 +273,7 @@ class TravelController extends Controller
 
     public function getStatistic(Request $request)
     {
-        return Travel::select('travels.*', 'tarifs.name_ru')
+        return Travel::select('travels.*', 'tarifs.name_ru')->where('user_id', $request->user()->id)
             ->join('tarifs', 'travels.tarif_id', '=', 'tarifs.id')
             ->get();
     }
