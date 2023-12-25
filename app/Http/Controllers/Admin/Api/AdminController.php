@@ -10,6 +10,7 @@ use App\Models\Travel;
 use App\Models\Tarif;
 use App\Models\User;
 use Str;
+use DB;
 
 class AdminController extends Controller
 {
@@ -24,7 +25,12 @@ class AdminController extends Controller
 
     public function users()
     {
-        $users = User::orderBy('id', 'desc')->get();
+        // $users = User::orderBy('id', 'desc')->get();
+        $users = User::findOrFail(5);
+
+        return User::select('users.*', 'travels.km', 'travels.price')
+                ->join('travels', 'travels.user_id', '=', 'users.id')
+                ->get();
 
         return response()->json([
             'users' => $users,
