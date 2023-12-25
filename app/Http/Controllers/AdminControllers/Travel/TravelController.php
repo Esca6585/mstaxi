@@ -123,6 +123,7 @@ class TravelController extends Controller
      */
     public function edit($lang, Travel $travel)
     {
+        return redirect()->back();
         return view('admin-panel.travel.travel-form', compact('travel'));
     }
 
