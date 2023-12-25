@@ -39,20 +39,20 @@ Route::post('/coordinate-save', [App\Http\Controllers\User\Travel\TravelControll
 // Admin Login API
 
 Route::post('/admin/login', [App\Http\Controllers\Admin\Auth\AuthController::class, 'login']);
-
 Route::post('/admin/logout', [App\Http\Controllers\Admin\Auth\AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 // Admin App API
 Route::get('/travels', [App\Http\Controllers\Admin\Api\AdminController::class, 'travels'])->middleware('auth:sanctum');
 Route::get('/users', [App\Http\Controllers\Admin\Api\AdminController::class, 'users'])->middleware('auth:sanctum');
-//new
+
 Route::get('/user/{id}',[App\Http\Controllers\Admin\Api\AdminController::class, 'user'])->middleware('auth:sanctum');
 Route::get('/user/delete/{id}', [App\Http\Controllers\Admin\Api\AdminController::class, 'userDelete'])->middleware('auth:sanctum');
 Route::post('/user/create', [App\Http\Controllers\Admin\Api\AdminController::class, 'userCreate'])->middleware('auth:sanctum');
 Route::get('/user-block-unblock/{id}', [App\Http\Controllers\Admin\Api\AdminController::class, 'userBlockUnblock'])->middleware('auth:sanctum');
-
 Route::post('/user-update', [App\Http\Controllers\Admin\Api\AdminController::class, 'userUpdate'])->middleware('auth:sanctum');
 
-// last code in Esen
-// Route::post('/user-block-unblock', [App\Http\Controllers\Admin\Api\AdminController::class, 'userBlockUnblock'])->middleware('auth:sanctum');
- 
+Route::get('/tarif/{id}',[App\Http\Controllers\Admin\Api\AdminController::class, 'tarif'])->middleware('auth:sanctum');
+Route::get('/tarif/delete/{id}', [App\Http\Controllers\Admin\Api\AdminController::class, 'tarifDelete'])->middleware('auth:sanctum');
+Route::post('/tarif/create', [App\Http\Controllers\Admin\Api\AdminController::class, 'tarifCreate'])->middleware('auth:sanctum');
+Route::post('/tarif-update', [App\Http\Controllers\Admin\Api\AdminController::class, 'tarifUpdate'])->middleware('auth:sanctum');
+

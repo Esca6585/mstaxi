@@ -148,7 +148,7 @@ class TarifController extends Controller
 
             $fileName = $fileRandName . '.' . $fileExt;
             
-            $path = 'assets/Tarif/' . Str::slug($request->name_tm . '-' . $date . '-updated' ) . '/';
+            $path = 'assets/tarif/' . Str::slug($request->name_tm . '-' . $date . '-updated' ) . '/';
 
             $image->move($path, $fileName);
             

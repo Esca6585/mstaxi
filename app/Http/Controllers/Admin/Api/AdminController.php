@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Travel;
+use App\Models\Tarif;
 use App\Models\User;
+use Str;
 
 class AdminController extends Controller
 {
@@ -123,5 +125,146 @@ class AdminController extends Controller
         return response()->json([
             'success' => true,
         ]);
+    }
+
+    public function tarif($id)
+    {
+        $tarif = Tarif::findOrFail($id);
+        return response()->json(['tarif' => $tarif]);
+    }
+
+    public function tarifCreate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name_tm' => 'required',
+            'name_ru' => 'required',
+            'minimum_price' => 'required',
+            'every_minute_price' => 'required',
+            'every_km_price' => 'required',
+            'every_waiting_price' => 'required',
+            'free_waiting_minute' => 'required',
+            'every_minute_price_outside' => 'required',
+            'every_km_price_outside' => 'required',
+            'additional_tarif' => 'required',
+        ]);
+
+        if($request->file('image')){
+            $image = $request->file('image');
+            
+            $date = date("d-m-Y H-i-s");
+            
+            $fileRandName = Str::random(10);
+            $fileExt = $image->getClientOriginalExtension();
+
+            $fileName = $fileRandName . '.' . $fileExt;
+            
+            $path = 'assets/tarif/' . Str::slug($request->name_tm . '-' . $date ) . '/';
+
+            $image->move($path, $fileName);
+            
+            $originalImage = $path . $fileName;
+        }
+
+        $tarif = new Tarif();
+
+        $tarif->name_tm = $validatedData['name_tm'];
+        $tarif->name_ru = $validatedData['name_ru'];
+        $tarif->minimum_price = $validatedData['minimum_price'];
+        $tarif->every_minute_price = $validatedData['every_minute_price'];
+        $tarif->every_km_price = $validatedData['every_km_price'];
+        $tarif->every_waiting_price = $validatedData['every_waiting_price'];
+        $tarif->free_waiting_minute = $validatedData['free_waiting_minute'];
+        $tarif->every_minute_price_outside = $validatedData['every_minute_price_outside'];
+        $tarif->every_km_price_outside = $validatedData['every_km_price_outside'];
+        $tarif->additional_tarif = $validatedData['additional_tarif'];
+        $tarif->image = $originalImage ?? null;
+
+        $tarif->save();
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
+    public function tarifUpdate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'tarif_id' => 'required',
+            'name_tm' => 'required',
+            'name_ru' => 'required',
+            'minimum_price' => 'required',
+            'every_minute_price' => 'required',
+            'every_km_price' => 'required',
+            'every_waiting_price' => 'required',
+            'free_waiting_minute' => 'required',
+            'every_minute_price_outside' => 'required',
+            'every_km_price_outside' => 'required',
+            'additional_tarif' => 'required',
+        ]);
+
+        $tarif = Tarif::findOrFail($validatedData['tarif_id']);
+
+        if($request->file('image')){
+            
+            $this->deleteFolder($tarif);
+
+            $image = $request->file('image');
+            
+            $date = date("d-m-Y H-i-s");
+            
+            $fileRandName = Str::random(10);
+            $fileExt = $image->getClientOriginalExtension();
+
+            $fileName = $fileRandName . '.' . $fileExt;
+            
+            $path = 'assets/tarif/' . Str::slug($request->name_tm . '-' . $date . '-updated' ) . '/';
+
+            $image->move($path, $fileName);
+            
+            $originalImage = $path . $fileName;
+
+            $tarif->image = $originalImage;
+        }
+
+        $tarif->name_tm = $validatedData['name_tm'];
+        $tarif->name_ru = $validatedData['name_ru'];
+        $tarif->minimum_price = $validatedData['minimum_price'];
+        $tarif->every_minute_price = $validatedData['every_minute_price'];
+        $tarif->every_km_price = $validatedData['every_km_price'];
+        $tarif->every_waiting_price = $validatedData['every_waiting_price'];
+        $tarif->free_waiting_minute = $validatedData['free_waiting_minute'];
+        $tarif->every_minute_price_outside = $validatedData['every_minute_price_outside'];
+        $tarif->every_km_price_outside = $validatedData['every_km_price_outside'];
+        $tarif->additional_tarif = $validatedData['additional_tarif'];
+
+        $tarif->update();
+
+        return response()->json([
+            'success' => 'tarif is updated',
+        ]);
+    }
+   
+    public function tarifDelete($id)
+    {
+        $tarif = Tarif::findOrFail($id);
+
+        $this->deleteFolder($tarif);
+
+        $tarif->delete();
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
+    public function deleteFolder($tarif)
+    {
+        if($tarif->image){
+            $folder = explode('/', $tarif->image);
+
+            if($folder[2] != 'tarif-seeder'){
+                \File::deleteDirectory($folder[0] . '/' . $folder[1] . '/' . $folder[2]);
+            }
+        }
     }
 }
