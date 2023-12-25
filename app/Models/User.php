@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Travel;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -50,11 +51,19 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function all_km()
     {
-        return $this->hasMany(Travel::class);
+        $query = Travel::select(DB::raw("SUM(km) as all_km"))
+                    ->groupBy('item')
+                    ->get(); 
+                    
+        return $query;
     }
 
     public function all_price()
     {
-        return $this->hasMany(Travel::class);
+        $query = Travel::select(DB::raw("SUM(price) as all_price"))
+                    ->groupBy('item')
+                    ->get();
+                    
+        return $query;
     }
 }

@@ -29,8 +29,8 @@ class AdminController extends Controller
         $users = User::findOrFail(5);
 
         return User::select('users.*', 'travels.km', 'travels.price')
-                ->join('travels', 'travels.user_id', '=', 'users.id')
-                ->get();
+            ->join('travels', 'travels.user_id', '=', 'users.id')
+            ->get();
 
         return response()->json([
             'users' => $users,
