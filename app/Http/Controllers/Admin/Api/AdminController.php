@@ -38,8 +38,8 @@ class AdminController extends Controller
                     ->join('travels', function ($q) {
                         $q->on('travels.user_id','=','users.id');
                     })
-                    ->select('users.id', 'travel.user_id', 'users.first_name', 'users.last_name', 'users.status', 'users.online', 'users.time', \DB::raw('sum(travels.km) as all_km'), DB::raw('sum(travels.price) as all_price'))
-                    ->groupBy('users.id', 'travel.user_id', 'users.first_name', 'users.last_name', 'users.status', 'users.online', 'users.time')
+                    ->select('users.id', 'travels.user_id', 'users.first_name', 'users.last_name', 'users.status', 'users.online', 'users.time', \DB::raw('sum(travels.km) as all_km'), DB::raw('sum(travels.price) as all_price'))
+                    ->groupBy('users.id', 'travels.user_id', 'users.first_name', 'users.last_name', 'users.status', 'users.online', 'users.time')
                     ->get();
 
         return response()->json([
