@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
+use App\Models\User;
 use App\Models\Route;
 use App\Models\Travel;
 use App\Models\Tarif;
