@@ -168,6 +168,14 @@ class TravelController extends Controller
             $route->lon = $row['langitude'];
 
             $route->save();
+
+            $user = User::findOrfail($request->user()->id);
+            $user->time = $row['time'];
+            $user->update();
+
+            $travel = Travel::findOrfail($row['travel_id']);
+            $travel->km = $row['km'];
+            $travel->update();
         }
 
         return response()->json([
