@@ -171,7 +171,7 @@ class TravelController extends Controller
         }
 
         return response()->json([
-            'status' => "success",
+            'success' => true,
         ]);
     }
 

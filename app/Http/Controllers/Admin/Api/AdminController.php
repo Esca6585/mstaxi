@@ -106,7 +106,7 @@ class AdminController extends Controller
         $user->update();
 
         return response()->json([
-            'success' => 'user is updated',
+            'success' => true,
         ]);
     }
 
@@ -247,7 +247,7 @@ class AdminController extends Controller
         $tarif->update();
 
         return response()->json([
-            'success' => 'tarif is updated',
+            'success' => true,
         ]);
     }
    

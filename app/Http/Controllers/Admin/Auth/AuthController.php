@@ -34,7 +34,7 @@ class AuthController extends Controller
         auth()->user()->tokens()->where('id', $tokenId )->delete();
 
         return response()->json([
-            'token' => 'Your token is deleted!',
+            'success' => true,
         ]);
     }
 }
