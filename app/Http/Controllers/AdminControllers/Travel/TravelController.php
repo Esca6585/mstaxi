@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminControllers\Travel;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Travel;
+use App\Models\Tarif;
 use Illuminate\Http\Request;
 use App\Http\Requests\TravelCreateRequest;
 use App\Http\Requests\TravelUpdateRequest;
@@ -112,7 +113,11 @@ class TravelController extends Controller
      */
     public function show($lang, Travel $travel)
     {
-        return view('admin-panel.travel.travel-show', compact('travel'));
+        $explode_id = array_map('intval', explode(',', $travel->tarifs));
+
+        $additional_tarifs = Tarif::whereIn('id', $explode_id)->get();
+        
+        return view('admin-panel.travel.travel-show', compact('travel', 'additional_tarifs'));
     }
 
     /**

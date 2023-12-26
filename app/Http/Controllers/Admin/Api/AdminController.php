@@ -25,12 +25,13 @@ class AdminController extends Controller
 
     public function users()
     {
-        // $users = User::orderBy('id', 'desc')->get();
-        $users = User::findOrFail(5);
-
-        return User::select('users.*', 'travels.km', 'travels.price')
-            ->join('travels', 'travels.user_id', '=', 'users.id')
-            ->get();
+        $users = \DB::table('users')
+                    ->join('travels', function ($q) {
+                        $q->on('travels.user_id','=','users.id');
+                    })
+                    ->select('users.id', 'users.first_name', 'users.last_name', 'users.status', 'users.online', \DB::raw('sum(travels.km) as all_km'), DB::raw('sum(travels.price) as all_price'))
+                    ->groupBy('users.id', 'users.first_name', 'users.last_name', 'users.status', 'users.online')
+                    ->get();
 
         return response()->json([
             'users' => $users,

@@ -46,6 +46,13 @@ class Travel extends Model
         return $this->belongsTo(Tarif::class);
     }
 
+    public function additional_tarifs($ids)
+    {
+        $additional_tarifs = Tarif::whereIn('id', $ids)->get();
+
+        return $additional_tarifs;
+    }
+
     public function routes()
     {
         return $this->hasMany(Route::class);

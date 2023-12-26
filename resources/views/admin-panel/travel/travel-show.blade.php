@@ -244,6 +244,12 @@
                                                 </span>
                                             </h5>
 
+                                            <ul>
+                                                @foreach($additional_tarifs as $additional_tarif)
+                                                    <li>{{ $additional_tarif->minimum_price }} manat</li>
+                                                @endforeach
+                                            </ul>
+
                                         </div>
                                     </div>
 
