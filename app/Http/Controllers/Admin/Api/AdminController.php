@@ -32,7 +32,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function userStatus()
+    public function userStatistic()
     {
         $users = \DB::table('users')
                     ->join('travels', function ($q) {
