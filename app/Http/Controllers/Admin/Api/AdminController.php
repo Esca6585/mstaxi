@@ -22,8 +22,17 @@ class AdminController extends Controller
             'travels' => $travels,
         ]);
     }
-
+    
     public function users()
+    {
+        $users = User::orderBy('id', 'desc')->get();
+
+        return response()->json([
+            'users' => $users,
+        ]);
+    }
+
+    public function userStatus()
     {
         $users = \DB::table('users')
                     ->join('travels', function ($q) {
