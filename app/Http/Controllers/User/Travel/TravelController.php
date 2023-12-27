@@ -282,9 +282,15 @@ class TravelController extends Controller
 
     public function getStatistic(Request $request)
     {
+        if($request->user_id){
+            return Travel::select('travels.*', 'tarifs.name_ru')->where('user_id', $request->user_id)
+                    ->join('tarifs', 'travels.tarif_id', '=', 'tarifs.id')
+                    ->get();
+        }
+
         return Travel::select('travels.*', 'tarifs.name_ru')->where('user_id', $request->user()->id)
-            ->join('tarifs', 'travels.tarif_id', '=', 'tarifs.id')
-            ->get();
+                ->join('tarifs', 'travels.tarif_id', '=', 'tarifs.id')
+                ->get();
     }
 
     public function diffrenceMinute($created_at)
