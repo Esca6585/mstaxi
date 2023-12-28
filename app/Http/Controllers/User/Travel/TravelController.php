@@ -80,82 +80,9 @@ class TravelController extends Controller
         
         $travel->update();
 
-        $night = $this->dayOrNight();
-
         return response()->json([
-            'status' => $travel->status,
-            'night' => $night,
-            'tarif' => $tarif,
-            'travel' => $travel,
+            'status' => true,
         ]);
-    }
-
-    public function routeSave(Request $request)
-    {
-        $travel = Travel::findOrFail($request->travel_id);
-        $tarif = Tarif::findOrFail($travel->tarif_id);
-
-        $night = $this->dayOrNight();
-
-        if($travel->status == 'waiting'){
-            $kilometr = $this->waitingMeasureDistance($request->travel_id, $request);
-
-            $diffInMinutes = $this->diffrenceMinute($travel->created_at);
-
-            if($diffInMinutes > 0){
-                $travel->price = ($diffInMinutes * $tarif->every_waiting_price);
-                $travel->time_of_waiting = $diffInMinutes;
-                $travel->minimum_price = $tarif->minimum_price;
-                $travel->minute_price = $tarif->every_minute_price;
-                $travel->km_price += $tarif->every_km_price;
-                $travel->waiting_price = $tarif->every_waiting_price;
-                $travel->minute_price_outside = $tarif->every_minute_price_outside;
-                $travel->km_price_outside = $tarif->every_km_price_outside;
-
-                $travel->update();
-            }
-
-            if($kilometr > 0.1){
-                $travel->status = 'go';
-                $travel->update();
-
-                $this->saveToRouteDBwaiting($travel, $request, $tarif);
-    
-                return response()->json([
-                    'status' => $travel->status,
-                    'kilometr' => $kilometr,
-                    'night' => $night,
-                    'tarif' => $tarif,
-                    'travel' => $travel,
-                ]);
-            } else {
-                return response()->json([
-                    'status' => $travel->status,
-                    'kilometr' => $kilometr,
-                    'night' => $night,
-                    'tarif' => $tarif,
-                    'travel' => $travel,
-                ]);
-            }
-        } else if($travel->status == 'go') {
-            
-            $lastRoute = Route::latest('created_at')->where('travel_id', $travel->id)->where('user_id', $request->user()->id)->first();
-
-            $kilometr = $this->measureDistance($lastRoute, $request);
-
-            if($kilometr > 0){
-                $this->saveToRouteDBgo($lastRoute, $request, $tarif);
-            }
-
-            return response()->json([
-                'status' => $travel->status,
-                'kilometr' => $kilometr,
-                'lastRoute' => $lastRoute,
-                'night' => $night,
-                'tarif' => $tarif,
-                'travel' => $travel
-            ]);
-        }
     }
 
     public function coordinateSave(Request $request)
