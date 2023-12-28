@@ -283,4 +283,9 @@ class AdminController extends Controller
             }
         }
     }
+
+    public function sendNotification(Request $request)
+    {
+        return $request;
+    }
 }

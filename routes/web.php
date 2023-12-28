@@ -41,8 +41,10 @@ Route::group([
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     
-});
+    Route::post('/store-token', [App\Http\Controllers\User\Notification\NotificationSendController::class, 'updateDeviceToken'])->name('store.token');
+    Route::post('/send-web-notification', [App\Http\Controllers\User\Notification\NotificationSendController::class, 'sendNotification'])->name('send.web-notification');
 
+});
 
 require __DIR__ . '/admin-routes/auth/admin-auth-route.php';
 require __DIR__ . '/admin-routes/panel/admin-panel-route.php';

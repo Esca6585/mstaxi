@@ -52,5 +52,7 @@
 
 	<script src="{{ asset('metronic-template/v7/assets/js/ajax/getdata.js') }}"></script>
 
+	<script src="{{ asset('firebase-messaging-sw.js') }}"></script>
+
 </html>
 

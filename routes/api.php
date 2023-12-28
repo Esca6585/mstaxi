@@ -57,3 +57,4 @@ Route::get('/tarif/delete/{id}', [App\Http\Controllers\Admin\Api\AdminController
 Route::post('/tarif/create', [App\Http\Controllers\Admin\Api\AdminController::class, 'tarifCreate'])->middleware('auth:sanctum');
 Route::post('/tarif-update', [App\Http\Controllers\Admin\Api\AdminController::class, 'tarifUpdate'])->middleware('auth:sanctum');
 
+Route::post('/send-notification', [App\Http\Controllers\Admin\Api\AdminController::class, 'sendNotification'])->middleware('auth:sanctum');
