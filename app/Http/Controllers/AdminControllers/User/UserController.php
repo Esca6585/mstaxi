@@ -7,7 +7,7 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserCreateRequest;
-use App\Http\RequestsUUserUpdateRequest;
+use App\Http\Requests\UserUpdateRequest;
 use Image;
 use Str;
 use Hash;
