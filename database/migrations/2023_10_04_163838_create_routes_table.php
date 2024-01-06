@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('lat');
             $table->string('lon');
             
+            $table->float('price')->nullable();
+            $table->float('km')->nullable();
+
             $table->foreign('travel_id')
                 ->references('id')
                 ->on('travels')

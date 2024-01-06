@@ -28,10 +28,6 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->boolean('status');
-            $table->boolean('online')->default(0);
-            $table->string('time')->default(0);
-
-            $table->text('device_token')->nullable(); // Add device token in users migration file
             
             $table->rememberToken();
             $table->timestamps();

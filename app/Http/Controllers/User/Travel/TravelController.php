@@ -7,13 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
-use App\Models\User;
 use App\Models\Route;
 use App\Models\Travel;
 use App\Models\Tarif;
 use Carbon;
 use DateTime;
-use DB;
 
 class TravelController extends Controller
 {
@@ -63,54 +61,93 @@ class TravelController extends Controller
         $travel = Travel::findOrFail($request->travel_id);
         $tarif = Tarif::findOrFail($travel->tarif_id);
         
+        $lastRoute = Route::latest('created_at')->where('travel_id', $travel->id)->where('user_id', $request->user()->id)->first();
+
+        $this->saveToRouteDBfinish($lastRoute, $request, $tarif);
+
         $travel->lat_finish = $request->lat_finish;
         $travel->lon_finish = $request->lon_finish;
-        $travel->tarifs = $request->tarifs;
-        $travel->km = $request->all_km;
-        $travel->price = $request->total_price;
-
-        $travel->minimum_price = $tarif->minimum_price;
-        $travel->minute_price = (int)($tarif->every_minute_price*$request->time);
-        $travel->km_price = (int)($request->all_km*$tarif->every_km_price);
-        $travel->waiting_price = (int)($tarif->every_waiting_price*$request->waiting_time);
-        $travel->minute_price_outside = $tarif->every_minute_price_outside;
-        $travel->km_price_outside = $tarif->every_km_price_outside;
-
         $travel->status = 'finished';
         
         $travel->update();
 
+        $night = $this->dayOrNight();
+
         return response()->json([
-            'status' => true,
+            'status' => $travel->status,
+            'night' => $night,
+            'tarif' => $tarif,
+            'travel' => $travel,
         ]);
     }
 
-    public function coordinateSave(Request $request)
+    public function routeSave(Request $request)
     {
-        foreach($request->data as $row){
-            $route = new Route;
+        $travel = Travel::findOrFail($request->travel_id);
+        $tarif = Tarif::findOrFail($travel->tarif_id);
+
+        $night = $this->dayOrNight();
+
+        if($travel->status == 'waiting'){
+            $kilometr = $this->waitingMeasureDistance($request->travel_id, $request);
+
+            $diffInMinutes = $this->diffrenceMinute($travel->created_at);
+
+            if($diffInMinutes > 0){
+                $travel->price = ($diffInMinutes * $tarif->every_waiting_price);
+                $travel->time_of_waiting = $diffInMinutes;
+                $travel->minimum_price = $tarif->minimum_price;
+                $travel->minute_price = $tarif->every_minute_price;
+                $travel->km_price += $tarif->every_km_price;
+                $travel->waiting_price = $tarif->every_waiting_price;
+                $travel->minute_price_outside = $tarif->every_minute_price_outside;
+                $travel->km_price_outside = $tarif->every_km_price_outside;
+
+                $travel->update();
+            }
+
+            if($kilometr > 0.1){
+                $travel->status = 'go';
+                $travel->update();
+
+                $this->saveToRouteDBwaiting($travel, $request, $tarif);
+    
+                return response()->json([
+                    'status' => $travel->status,
+                    'kilometr' => $kilometr,
+                    'night' => $night,
+                    'tarif' => $tarif,
+                    'travel' => $travel,
+                ]);
+            } else {
+                return response()->json([
+                    'status' => $travel->status,
+                    'kilometr' => $kilometr,
+                    'night' => $night,
+                    'tarif' => $tarif,
+                    'travel' => $travel,
+                ]);
+            }
+        } else if($travel->status == 'go') {
             
-            $route->user_id = $request->user()->id;
-            $route->travel_id = $row['travel_id'];
-            $route->lat = $row['latitude'];
-            $route->lon = $row['langitude'];
+            $lastRoute = Route::latest('created_at')->where('travel_id', $travel->id)->where('user_id', $request->user()->id)->first();
 
-            $route->save();
+            $kilometr = $this->measureDistance($lastRoute, $request);
 
-            $user = User::findOrfail($request->user()->id);
-            $user->time = $row['time'];
-            $user->update();
+            if($kilometr > 0){
+                $this->saveToRouteDBgo($lastRoute, $request, $tarif);
+            }
 
-            $travel = Travel::findOrfail($row['travel_id']);
-            $travel->km = $row['km'];
-            $travel->update();
+            return response()->json([
+                'status' => $travel->status,
+                'kilometr' => $kilometr,
+                'lastRoute' => $lastRoute,
+                'night' => $night,
+                'tarif' => $tarif,
+                'travel' => $travel
+            ]);
         }
-
-        return response()->json([
-            'success' => true,
-        ]);
     }
-
 
     public function saveToRouteDBwaiting($travel, $request, $tarif)
     {
@@ -210,14 +247,15 @@ class TravelController extends Controller
     public function getStatistic(Request $request)
     {
         if($request->user_id){
-            return Travel::select('travels.*', 'tarifs.name_ru')->where('user_id', $request->user_id)
-                    ->join('tarifs', 'travels.tarif_id', '=', 'tarifs.id')
-                    ->get();
+            $travels = Travel::where('user_id', $request->user_id)->get();
+        } else {
+            $travels = Travel::where('user_id', $request->user()->id)->get();
         }
-
-        return Travel::select('travels.*', 'tarifs.name_ru')->where('user_id', $request->user()->id)
-                ->join('tarifs', 'travels.tarif_id', '=', 'tarifs.id')
-                ->get();
+        $statistic = $travels->groupBy(function ($travel) { return $travel->created_at->format('d-m-Y'); });
+ 
+        return response()->json([
+            'statistic' => $statistic,
+        ]);
     }
 
     public function diffrenceMinute($created_at)
@@ -308,7 +346,7 @@ class TravelController extends Controller
     {
         $time = Carbon::now()->format('H');
 
-        if($time > 6 && $time < 22){
+        if($time > 6 && $time < 21){
             return 'Day';
         } else {
             return 'Night';
