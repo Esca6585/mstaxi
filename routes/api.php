@@ -45,6 +45,7 @@ Route::post('/admin/logout', [App\Http\Controllers\Admin\Auth\AuthController::cl
 Route::get('/travels', [App\Http\Controllers\Admin\Api\AdminController::class, 'travels'])->middleware('auth:sanctum');
 Route::get('/users', [App\Http\Controllers\Admin\Api\AdminController::class, 'users'])->middleware('auth:sanctum');
 Route::get('/users/statistic', [App\Http\Controllers\Admin\Api\AdminController::class, 'userStatistic'])->middleware('auth:sanctum');
+Route::get('/user/statistic', [App\Http\Controllers\Admin\Api\AdminController::class, 'userStatistic'])->middleware('auth:sanctum');
 
 Route::get('/user/{id}',[App\Http\Controllers\Admin\Api\AdminController::class, 'user'])->middleware('auth:sanctum');
 Route::get('/user/delete/{id}', [App\Http\Controllers\Admin\Api\AdminController::class, 'userDelete'])->middleware('auth:sanctum');

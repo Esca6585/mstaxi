@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Device;
 use Str;
 
 class AuthController extends Controller
@@ -52,6 +53,19 @@ class AuthController extends Controller
         }
 
         $user = User::where('username', $request['username'])->where('status', 1)->firstOrFail();
+
+        if($request->header('device') == 'mobile') {
+            $device = Device::where('user_id',$user->id)->first();
+            if($device == null) {
+                $add = new Device();
+                $add->user_id = $user->id;
+                $add->token = $request->token;
+                $add->save();
+            } else {
+                $device->token = $request->token;
+                $device->update();
+            }
+        }
 
         $token = $user->createToken('auth_token')->plainTextToken;
 

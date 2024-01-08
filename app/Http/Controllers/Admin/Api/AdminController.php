@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Travel;
 use App\Models\Tarif;
 use App\Models\User;
+use App\Models\Device;
 use Str;
 use DB;
 
@@ -286,6 +287,38 @@ class AdminController extends Controller
 
     public function sendNotification(Request $request)
     {
-        return $request;
+        $firebaseToken = Device::whereIn('user_id',$request->userIds)->get();
+        
+        $SERVER_API_KEY = env('SERVER_API_KEY');
+        
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => 'salam',
+                "body" => 'bas',  
+            ],
+            "data" => [
+                "text" => "hemma salam"
+                ]
+            ];
+            $dataString = json_encode($data);
+            
+            $headers = [
+                'Authorization: key=' . $SERVER_API_KEY,
+                'Content-Type: application/json',
+            ];
+            
+            $ch = curl_init();
+            
+            curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+            
+            $response = curl_exec($ch);
+            
+            return response()->json(['success', 'Notification send successfully.']);
     }
 }
